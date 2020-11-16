@@ -13,8 +13,6 @@ class Paymentsettings_m extends MY_Model {
         $this->db->insert("payment",$paymentData);
 	}
 	
-
-
 	public function get_student_and_classes($roll){
 		//select *from
 		//join table
@@ -37,6 +35,15 @@ class Paymentsettings_m extends MY_Model {
 		$this->db->join('classes', 'payment.classesID=classes.classesID');
 		$this->db->where('roll',$roll);
 		return $this->db->get()->result_array();
+	}
+
+
+	public function get_payment($array){
+		$this->db->where('studentID',$array['studentID']);
+		$this->db->where('classesID',$array['classesID']);
+		return $this->db->get('payment')->row() ;
+		// $paymentData=$this->db->get('payment');
+		// return $paymentData->row(); persistence
 	}
 
 	// public function get_single_student($roll){

@@ -10,178 +10,171 @@
     <div class="box-body">
         <div class="row">
             <div class="col-sm-12">
-                
-                <?php if($payment){?>
-                    <div id="hide-table">
-                    
-                        <table id="example1" class="table table-striped table-bordered table-hover dataTable no-footer">
-                            <thead>
-                            <tr>
-                                <th class="col-sm-1"><?=$this->lang->line('slno')?></th>
-                                <th class="col-sm-3"><?=$this->lang->line('take_exam_name')?></th>
-                                <th class="col-sm-2"><?=$this->lang->line('take_exam_status')?></th>
-                                <th class="col-sm-1"><?=$this->lang->line('take_exam_duration')?></th>
-                                <th class="col-sm-1"><?=$this->lang->line('take_exam_payment')?></th>
-                                <th class="col-sm-2"><?=$this->lang->line('take_exam_cost')?></th>
-                                <th class="col-sm-2"><?=$this->lang->line('action')?></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php if(inicompute($onlineExams)) { $i = 0; foreach($onlineExams as $onlineExam) {
-                                if($usertypeID == '3') {
-                                    if((($student->classesID == $onlineExam->classID) || ($onlineExam->classID == '0')) && (($student->sectionID == $onlineExam->sectionID) || ($onlineExam->sectionID == '0')) && (($student->studentgroupID == $onlineExam->studentGroupID) || ($onlineExam->studentGroupID == '0')) && (($onlineExam->subjectID == '0') || (in_array($onlineExam->subjectID, $userSubjectPluck)))) { $i++;
+                <div id="hide-table">
+                    <table id="example1" class="table table-striped table-bordered table-hover dataTable no-footer">
+                        <thead>
+                        <tr>
+                            <th class="col-sm-1"><?=$this->lang->line('slno')?></th>
+                            <th class="col-sm-3"><?=$this->lang->line('take_exam_name')?></th>
+                            <th class="col-sm-2"><?=$this->lang->line('take_exam_status')?></th>
+                            <th class="col-sm-1"><?=$this->lang->line('take_exam_duration')?></th>
+                            <th class="col-sm-1"><?=$this->lang->line('take_exam_payment')?></th>
+                            <th class="col-sm-2"><?=$this->lang->line('take_exam_cost')?></th>
+                            <th class="col-sm-2"><?=$this->lang->line('action')?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if(inicompute($onlineExams)) { $i = 0; foreach($onlineExams as $onlineExam) {
+                            if($usertypeID == '3') {
+                                if((($student->classesID == $onlineExam->classID) || ($onlineExam->classID == '0')) && (($student->sectionID == $onlineExam->sectionID) || ($onlineExam->sectionID == '0')) && (($student->studentgroupID == $onlineExam->studentGroupID) || ($onlineExam->studentGroupID == '0')) && (($onlineExam->subjectID == '0') || (in_array($onlineExam->subjectID, $userSubjectPluck)))) { $i++;
 
-                                        $currentdate = 0;
-                                        if($onlineExam->examTypeNumber == '4') {
-                                            $presentDate = strtotime(date('Y-m-d'));
-                                            $examStartDate = strtotime($onlineExam->startDateTime);
-                                            $examEndDate = strtotime($onlineExam->endDateTime);
-                                        } elseif($onlineExam->examTypeNumber == '5') {
-                                            $presentDate = strtotime(date('Y-m-d H:i:s'));
-                                            $examStartDate = strtotime($onlineExam->startDateTime);
-                                            $examEndDate = strtotime($onlineExam->endDateTime);
-                                        }
+                                    $currentdate = 0;
+                                    if($onlineExam->examTypeNumber == '4') {
+                                        $presentDate = strtotime(date('Y-m-d'));
+                                        $examStartDate = strtotime($onlineExam->startDateTime);
+                                        $examEndDate = strtotime($onlineExam->endDateTime);
+                                    } elseif($onlineExam->examTypeNumber == '5') {
+                                        $presentDate = strtotime(date('Y-m-d H:i:s'));
+                                        $examStartDate = strtotime($onlineExam->startDateTime);
+                                        $examEndDate = strtotime($onlineExam->endDateTime);
+                                    }
 
-                                        $lStatusRunning = FALSE;
-                                        $lStatusExpire = FALSE;
-                                        $lStatusTaken = FALSE;
-                                        $lStatusTodayOnly = FALSE;
-                                        $paymentExpireStatus = FALSE;
+                                    $lStatusRunning = FALSE;
+                                    $lStatusExpire = FALSE;
+                                    $lStatusTaken = FALSE;
+                                    $lStatusTodayOnly = FALSE;
+                                    $paymentExpireStatus = FALSE;
 
-                                        $examLabel = $this->lang->line('take_exam_anytime');
-                                        if($onlineExam->examTypeNumber == '4' || $onlineExam->examTypeNumber == '5') {
-                                            if($presentDate < $examStartDate) {
-                                                $examLabel = $this->lang->line('take_exam_upcoming');
-                                            } elseif($presentDate > $examStartDate && $presentDate < $examEndDate) {
-                                                $examLabel = $this->lang->line('take_exam_running');
-                                                $lStatusRunning = TRUE;
-                                            } elseif($presentDate == $examStartDate && $presentDate == $examEndDate) {
-                                                $examLabel = $this->lang->line('take_exam_today_only');
-                                                $lStatusTodayOnly = TRUE;
-                                            } elseif($presentDate > $examStartDate && $presentDate > $examEndDate) {
-                                                $examLabel = $this->lang->line('take_exam_expired');
-                                                $lStatusExpire = TRUE;
-                                            }
-
-                                            if($presentDate > $examStartDate && $presentDate > $examEndDate) {
-                                                $paymentExpireStatus = TRUE;
-                                            }
-                                        } else {
+                                    $examLabel = $this->lang->line('take_exam_anytime');
+                                    if($onlineExam->examTypeNumber == '4' || $onlineExam->examTypeNumber == '5') {
+                                        if($presentDate < $examStartDate) {
+                                            $examLabel = $this->lang->line('take_exam_upcoming');
+                                        } elseif($presentDate > $examStartDate && $presentDate < $examEndDate) {
+                                            $examLabel = $this->lang->line('take_exam_running');
                                             $lStatusRunning = TRUE;
-                                        }
-
-                                        if($lStatusRunning) {
-                                            if(isset($examStatus[$onlineExam->onlineExamID])) {
-                                                $examLabel = $this->lang->line('take_exam_taken');
-                                                $lStatusTaken = TRUE;
-                                            }
-                                        } elseif($lStatusExpire) {
-                                            if(isset($examStatus[$onlineExam->onlineExamID])) {
-                                                $examLabel = $this->lang->line('take_exam_taken');
-                                                $lStatusTaken = TRUE;
-                                            }
-                                        } elseif($lStatusTodayOnly) {
-                                            if(isset($examStatus[$onlineExam->onlineExamID])) {
-                                                $examLabel = $this->lang->line('take_exam_taken');
-                                                $lStatusTaken = TRUE;
-                                            }
-                                        }
-
-                                        if($lStatusExpire) {
+                                        } elseif($presentDate == $examStartDate && $presentDate == $examEndDate) {
+                                            $examLabel = $this->lang->line('take_exam_today_only');
+                                            $lStatusTodayOnly = TRUE;
+                                        } elseif($presentDate > $examStartDate && $presentDate > $examEndDate) {
                                             $examLabel = $this->lang->line('take_exam_expired');
-                                        } else {
-                                            if($lStatusTaken) {
-                                                if($onlineExam->examStatus == 2) {
-                                                    $examLabel = $this->lang->line('take_exam_retaken');
-                                                }
+                                            $lStatusExpire = TRUE;
+                                        }
+
+                                        if($presentDate > $examStartDate && $presentDate > $examEndDate) {
+                                            $paymentExpireStatus = TRUE;
+                                        }
+                                    } else {
+                                        $lStatusRunning = TRUE;
+                                    }
+
+                                    if($lStatusRunning) {
+                                        if(isset($examStatus[$onlineExam->onlineExamID])) {
+                                            $examLabel = $this->lang->line('take_exam_taken');
+                                            $lStatusTaken = TRUE;
+                                        }
+                                    } elseif($lStatusExpire) {
+                                        if(isset($examStatus[$onlineExam->onlineExamID])) {
+                                            $examLabel = $this->lang->line('take_exam_taken');
+                                            $lStatusTaken = TRUE;
+                                        }
+                                    } elseif($lStatusTodayOnly) {
+                                        if(isset($examStatus[$onlineExam->onlineExamID])) {
+                                            $examLabel = $this->lang->line('take_exam_taken');
+                                            $lStatusTaken = TRUE;
+                                        }
+                                    }
+
+                                    if($lStatusExpire) {
+                                        $examLabel = $this->lang->line('take_exam_expired');
+                                    } else {
+                                        if($lStatusTaken) {
+                                            if($onlineExam->examStatus == 2) {
+                                                $examLabel = $this->lang->line('take_exam_retaken');
                                             }
                                         }
-                                    ?>
-                                    <tr>
-                                        <td data-title="<?=$this->lang->line('slno')?>">
-                                            <?php echo $i; ?>
-                                        </td>
-                                        <td data-title="<?=$this->lang->line('take_exam_name')?>">
-                                            <?php if(strlen($onlineExam->name) > 50) {
-                                                echo strip_tags(substr($onlineExam->name, 0, 50)."...");
-                                            } else {
-                                                echo strip_tags(substr($onlineExam->name, 0, 50));
-                                            } ?>
-                                            -
-                                            <?php 
-                                                echo $examLabel;                                           
-                                            ?>
-                                        </td>
-                                        <td data-title="<?=$this->lang->line('take_exam_status')?>">
-                                            <?php 
-                                                if($onlineExam->examStatus == 1) {
-                                                    echo $this->lang->line('take_exam_one_time');
-                                                } elseif($onlineExam->examStatus == 2) {
-                                                    echo $this->lang->line('take_exam_multiple_time');
-                                                }
-                                            ?>
-                                        </td>
-                                        <td data-title="<?=$this->lang->line('take_exam_duration')?>">
-                                            <?php echo $onlineExam->duration; ?>
-                                        </td>
-                                        <td data-title="<?=$this->lang->line('take_exam_payment')?>">
-                                            <?=($onlineExam->paid == 1) ? $this->lang->line('take_exam_paid') : $this->lang->line('take_exam_free') ;?>
-                                        </td> 
-                                        <td data-title="<?=$this->lang->line('take_exam_cost')?>">
-                                            <?=($onlineExam->paid == 1) ? number_format($onlineExam->cost, '2') : number_format($onlineExam->cost, '2');?> <?=$siteinfos->currency_code?>
-                                        </td>
-                                        <td data-title="<?=$this->lang->line('action')?>">
-                                            <?php
-                                                $paidStatus = 0;
-                                                if($onlineExam->paid == 1) {
-                                                    if(isset($paindingpayments[$onlineExam->onlineExamID])) {
+                                    }
+                                ?>
+                                <tr>
+                                    <td data-title="<?=$this->lang->line('slno')?>">
+                                        <?php echo $i; ?>
+                                    </td>
+                                    <td data-title="<?=$this->lang->line('take_exam_name')?>">
+                                        <?php if(strlen($onlineExam->name) > 50) {
+                                            echo strip_tags(substr($onlineExam->name, 0, 50)."...");
+                                        } else {
+                                            echo strip_tags(substr($onlineExam->name, 0, 50));
+                                        } ?>
+                                        -
+                                        <?php 
+                                            echo $examLabel;                                           
+                                        ?>
+                                    </td>
+                                    <td data-title="<?=$this->lang->line('take_exam_status')?>">
+                                        <?php 
+                                            if($onlineExam->examStatus == 1) {
+                                                echo $this->lang->line('take_exam_one_time');
+                                            } elseif($onlineExam->examStatus == 2) {
+                                                echo $this->lang->line('take_exam_multiple_time');
+                                            }
+                                        ?>
+                                    </td>
+                                    <td data-title="<?=$this->lang->line('take_exam_duration')?>">
+                                        <?php echo $onlineExam->duration; ?>
+                                    </td>
+                                    <td data-title="<?=$this->lang->line('take_exam_payment')?>">
+                                        <?=($onlineExam->paid == 1) ? $this->lang->line('take_exam_paid') : $this->lang->line('take_exam_free') ;?>
+                                    </td> 
+                                    <td data-title="<?=$this->lang->line('take_exam_cost')?>">
+                                        <?=($onlineExam->paid == 1) ? number_format($onlineExam->cost, '2') : number_format($onlineExam->cost, '2');?> <?=$siteinfos->currency_code?>
+                                    </td>
+                                    <td data-title="<?=$this->lang->line('action')?>">
+                                        <?php
+                                            $paidStatus = 0;
+                                            if($onlineExam->paid == 1) {
+                                                if(isset($paindingpayments[$onlineExam->onlineExamID])) {
+                                                    $paidStatus = 1;
+                                                } else {
+                                                    if($paymentExpireStatus) {
                                                         $paidStatus = 1;
                                                     } else {
-                                                        if($paymentExpireStatus) {
-                                                            $paidStatus = 1;
-                                                        } else {
-                                                            if($onlineExam->examStatus == 1) {
-                                                                if(isset($examStatus[$onlineExam->onlineExamID])) {
-                                                                    $paidStatus = 1;
-                                                                } else {
-                                                                    $paidStatus = 0;
-                                                                }
+                                                        if($onlineExam->examStatus == 1) {
+                                                            if(isset($examStatus[$onlineExam->onlineExamID])) {
+                                                                $paidStatus = 1;
                                                             } else {
-                                                                if(isset($paindingpayments[$onlineExam->onlineExamID])) {
-                                                                    $paidStatus = 1;
-                                                                } else {
-                                                                    $paidStatus = 0;
-                                                                }
+                                                                $paidStatus = 0;
+                                                            }
+                                                        } else {
+                                                            if(isset($paindingpayments[$onlineExam->onlineExamID])) {
+                                                                $paidStatus = 1;
+                                                            } else {
+                                                                $paidStatus = 0;
                                                             }
                                                         }
                                                     }
-                                                } else {
-                                                    $paidStatus = 1;
                                                 }
-                                            ?>
-                                            <button class="btn btn-success btn-xs mrg" onclick="newPopup('<?=base_url('take_exam/instruction/'.$onlineExam->onlineExamID)?>', '<?=$paidStatus?>', '<?=$onlineExam->onlineExamID?>')" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?=$this->lang->line('panel_title')?>"><i class="fa fa-columns"></i></button>
+                                            } else {
+                                                $paidStatus = 1;
+                                            }
+                                        ?>
+                                        <button class="btn btn-success btn-xs mrg" onclick="newPopup('<?=base_url('take_exam/instruction/'.$onlineExam->onlineExamID)?>', '<?=$paidStatus?>', '<?=$onlineExam->onlineExamID?>')" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?=$this->lang->line('panel_title')?>"><i class="fa fa-columns"></i></button>
 
-                                            <?php
-                                                if($onlineExam->paid && ($onlineExam->examStatus == 2) && !($paymentExpireStatus))  {
-                                                    echo '<a href="#addpayment" id="'.$onlineExam->onlineExamID.'" class="btn btn-primary btn-xs mrg getpaymentinfobtn" rel="tooltip" data-toggle="modal"><i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" data-original-title="'.$this->lang->line('take_exam_add_payment').'"></i></a>';
-                                                } elseif($onlineExam->paid && !($lStatusTaken) && !isset($payments[$onlineExam->onlineExamID]) && !($paymentExpireStatus)) {
-                                                    echo '<a href="#addpayment" id="'.$onlineExam->onlineExamID.'" class="btn btn-primary btn-xs mrg getpaymentinfobtn" rel="tooltip" data-toggle="modal"><i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" data-original-title="'.$this->lang->line('take_exam_add_payment').'"></i></a>';
-                                                }
+                                        <?php
+                                            if($onlineExam->paid && ($onlineExam->examStatus == 2) && !($paymentExpireStatus))  {
+                                                echo '<a href="#addpayment" id="'.$onlineExam->onlineExamID.'" class="btn btn-primary btn-xs mrg getpaymentinfobtn" rel="tooltip" data-toggle="modal"><i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" data-original-title="'.$this->lang->line('take_exam_add_payment').'"></i></a>';
+                                            } elseif($onlineExam->paid && !($lStatusTaken) && !isset($payments[$onlineExam->onlineExamID]) && !($paymentExpireStatus)) {
+                                                echo '<a href="#addpayment" id="'.$onlineExam->onlineExamID.'" class="btn btn-primary btn-xs mrg getpaymentinfobtn" rel="tooltip" data-toggle="modal"><i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" data-original-title="'.$this->lang->line('take_exam_add_payment').'"></i></a>';
+                                            }
 
-                                                if($onlineExam->paid) {
-                                                    echo '<a href="#paymentlist" id="'.$onlineExam->onlineExamID.'" class="btn btn-info btn-xs mrg getpaymentlistinfobtn" rel="tooltip" data-toggle="modal"><i class="fa fa-list-ul" data-toggle="tooltip" data-placement="top" data-original-title="'.$this->lang->line('take_exam_view_payments').'"></i></a>';
-                                                }
-                                            ?>
-                                        </td>
-                                    </tr>
-                                <?php } } } } ?>
-                            </tbody>
-                        </table>
-                    
-                    </div>
-                <?php } else {?>
-                    <h3>Please payment your due and contact our account section</h3>
-                <?php } ?>
+                                            if($onlineExam->paid) {
+                                                echo '<a href="#paymentlist" id="'.$onlineExam->onlineExamID.'" class="btn btn-info btn-xs mrg getpaymentlistinfobtn" rel="tooltip" data-toggle="modal"><i class="fa fa-list-ul" data-toggle="tooltip" data-placement="top" data-original-title="'.$this->lang->line('take_exam_view_payments').'"></i></a>';
+                                            }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php } } } } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

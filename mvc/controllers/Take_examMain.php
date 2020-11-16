@@ -51,20 +51,6 @@ Class Take_exam extends Admin_Controller {
         $usertypeID  = $this->session->userdata('usertypeID');
         $loginuserID = $this->session->userdata('loginuserID');
 
-        $this->data['student'] = $this->student_m->get_student($loginuserID);
-            
-            $array['studentID'] = $this->data['student']->studentID;
-            $array['classesID'] = $this->data['student']->classesID;
-
-            $this->data['payment']=$this->paymentsettings_m->get_payment($array);
-            // $payment=$this->paymentsettings_m->get_payment($array);
-
-            // echo "<pre>";
-            // print_r($payment);
-            // die();
-
-           
-
         $this->data['userSubjectPluck'] = [];
         if($usertypeID == '3') {
             $this->data['student'] = $this->student_m->get_single_student(array('studentID'=>$loginuserID));
@@ -159,7 +145,6 @@ Class Take_exam extends Admin_Controller {
 
         if((int) $onlineExamID) {
             $this->data['student'] = $this->student_m->get_student($userID);
-            
             if(inicompute($this->data['student'])) {
                 $array['classesID'] = $this->data['student']->classesID;
                 $array['sectionID'] = $this->data['student']->sectionID;
