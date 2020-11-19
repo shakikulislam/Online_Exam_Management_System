@@ -149,20 +149,24 @@ class Paymentsettings extends Admin_Controller {
 
 
     public function add_payment(){
+
         $data=array(
             'studentID'=>$this->input->post('studentID'),
             'classesID'=>$this->input->post('classesID'),
         );
-        $this->paymentsettings_m->add_payment($data);
+        $findPayment=$this->paymentsettings_m->get_payment($data);
+        
+        if(!empty($findPayment)){
+            //$this->data['findPayment']="Already Payment";
+            $this->session->set_flashdata('form','<div class="alert alert-danger"> Already Payment </div>');
+        }
+        else{
+            $this->paymentsettings_m->add_payment($data);
+        }
+        
         header('location:'.base_url('paymentsettings'));
 
     }
-
-    // public function remove_payment(){
-    //     $id=$this->uri->segment(3);
-    //     $this->paymentsettings_m->remove_payment($id);
-    //     header('location:'.base_url('paymentsettings'));
-    // }
 
     public function get_single_student(){
         $roll=$this->input->post('studentRoll');
@@ -173,37 +177,19 @@ class Paymentsettings extends Admin_Controller {
     }
     public function index() {
 
-        //$roll=$this->input->post('studentRoll',true);
-        // $this->data['stRoll']=$this->paymentsettings_m->get_view_single_student();
-
-        // $this->data["subview"] = "paymentsettings/index";
-        // $this->load->view('_layout_main', $this->data);
-
         $roll=$this->input->post('studentRoll');
-        // $dataInfo=$this->paymentsettings_m->get_student_and_classes($roll);
-        // if($roll==){
-        //     $this->data['stInfo']=$this->paymentsettings_m->get_student_and_classes($roll);;
-        // }
+        
         $this->data['stInfo']=$this->paymentsettings_m->get_student_and_classes($roll);
         //$st=$this->paymentsettings_m->get_student_and_classes("170222001");
     
-        $this->data['stRoll']=$this->paymentsettings_m->get_student($roll);
+        $this->data['paymentList']=$this->paymentsettings_m->get_student($roll);
 
         // echo "<pre>";
-        // print_r($this->data);
+        // print_r($this->data->checkPayment->studentID);
         // die();
  
         $this->data["subview"] = "paymentsettings/index";
         $this->load->view('_layout_main', $this->data);
     }
 
-
-    
-    // public function index() {
-
-    //     $this->data['due']=$this->paymentsettings_m->get_due_data();
-
-    //     $this->data["subview"] = "paymentsettings/index";
-    //     $this->load->view('_layout_main', $this->data);
-    // }
 }

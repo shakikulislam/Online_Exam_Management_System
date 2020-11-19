@@ -51,7 +51,7 @@
     $db['default']['hostname'] = 'localhost';
     $db['default']['username'] = 'shakikul';
     $db['default']['password'] = 'ShakikulAlo';
-    $db['default']['database'] = 'oemsfinal';
+    $db['default']['database'] = 'oems';
     $db['default']['dbdriver'] = 'mysqli';
     $db['default']['dbprefix'] = '';
     $db['default']['pconnect'] = FALSE;

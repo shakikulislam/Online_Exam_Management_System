@@ -180,7 +180,13 @@
                     
                     </div>
                 <?php } else {?>
-                    <h3>Please payment your due and contact our account section</h3>
+                    <div class="panel panel-primary">
+                        <div class="panel-title">
+                            <h3>Please payment your due and contact our account section</h3>
+                        </div>
+                    
+                    </div>
+                               
                 <?php } ?>
             </div>
         </div>

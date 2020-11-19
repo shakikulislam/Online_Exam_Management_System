@@ -1,6 +1,7 @@
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title"><i class="fa icon-paymentsettings"></i> <?$this->lang->line('panel_title')?></h3>
+        <h3 class="box-title"><i class="fa icon-paymentsettings"></i> Payment </h3>
+        <!-- <h3 class="box-title"><i class="fa icon-paymentsettings"></i> <?$this->lang->line('panel_title')?></h3> -->
 
        
         <ol class="breadcrumb">
@@ -31,11 +32,16 @@
                     </table>
                 </form>
                 </div> <!-- panel -->
+
+                
+                    <?php echo $this->session->flashdata('form'); ?>
+                
                 
             </div>
             <div class="col-sm-3"></div>
         </div> <!-- Row -->
-        <div class="row">
+        <div class="row">          
+
             <div class="col-sm-6">
                 <div class="panel panel-success">
                     <div class="panel-heading">
@@ -50,7 +56,7 @@
                             <table class="table table-striped table-bordered table-hover dataTable no-footer">
                                 <tr>
                                     <td>Name</td>
-                                    <td><?php echo $stInfo->name; ?></td>
+                                    <td><strong><?php echo $stInfo->name; ?></strong></td>
                                 </tr>
                                 <tr>
                                     <td>Roll No</td>
@@ -77,9 +83,7 @@
             <div class="col-sm-6">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <div class="panel-title">
-                            Payment
-                        </div>
+                        <div class="panel-title"> Payment </div>
                     </div>
                     <div class="panel-body">
                         <?php if($stInfo){?>
@@ -88,15 +92,12 @@
                                 <input type="hidden" name="studentID" value="<?php echo $stInfo->studentID ?>">
                                 <input type="hidden" name="classesID" value="<?php echo $stInfo->classesID ?>">
 
-
-
-
-
                                 <label class="label form-control">Running Class</label>
-                                <input type="text" name="classes" class="form-control" value="<?php echo $stInfo->classes ?>">
+                                <input type="text" name="classes" class="form-control" value="<?php echo $stInfo->classes ?>" readonly>
                                 <br>
                                 
-                                <input onclick="return confirm('Are you')" type="submit" value="Confirm" class="btn btn-success">
+                                <input type="submit" value="Confirm" class="btn btn-success">
+                                <!-- <input onclick="return confirm('Confirm Payment')" type="submit" value="Confirm" class="btn btn-success"> -->
                             </form>
                         <?php } else {?>
                             <h3>No Data Available</h3>
@@ -120,15 +121,19 @@
                                     <th>SL</th>
                                     <th>Class</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $sl=1; foreach ($stRoll as $d) { ?>
+                                <?php $sl=1; foreach ($paymentList as $paymentList) { ?>
 
                                     <tr>
                                         <td><?php echo $sl++ ?></td>
-                                        <td><?php echo $d['classes']; ?></td>
+                                        <td style="width: 60%;"><?php echo $paymentList['classes']; ?></td>
                                         <td>Paid</td>
+                                        <td>
+                                            <a href="" class="btn btn-sm btn-danger fa fa-trash"></a>
+                                        </td>
                                     </tr>
                                             
                                 <?php } ?>
