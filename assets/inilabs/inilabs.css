@@ -175,8 +175,24 @@ label {
 
 /* Login Start */
 .white-bg-login {
-    background: none repeat scroll 0 0 #F1F2F7;
+  /* background: none repeat scroll 0 0 #ec9fe0; */
+  /* background-image: url(".base_url('uploads/images/'.$siteinfos->photo)."); */
+  /* The image used */
+  /* background-image: url(".base_url('uploads/images/')."); */
+  background-image: url('../../uploads/images/EUB-CAMPUS-2019.jpg');
+  /* Full height */
+  height: 100%;
+  width: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
+/* .login-background {
+  background-image: url('<?php file:\\\C:\Users\SHAKIKUL\Desktop\EUB-CAMPUS-2019.jpg');
+} */
 
 .form-box > .header {
   margin-top: 120px;

@@ -18,15 +18,15 @@
 </head>
 
 <body class="white-bg-login">
-
-    <div class="col-md-4 col-md-offset-4 marg" style="margin-top:30px;">
+    
+    <!-- <div class="col-md-4 col-md-offset-4 marg" style="margin-top:30px;">
         <?php
             if(inicompute($siteinfos->photo)) {
                 echo "<center><img width='50' height='50' src=".base_url('uploads/images/'.$siteinfos->photo)." /></center>";
             }
         ?>
         <center><h4><?php echo namesorting($siteinfos->sname, 25); ?></h4></center>
-    </div>
+    </div> -->
 
     <?php $this->load->view($subview); ?>
 

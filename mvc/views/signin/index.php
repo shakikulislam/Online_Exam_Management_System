@@ -1,6 +1,16 @@
+<style>
+    .background{
+        opacity:0.8;
+    }
 
-<div class="form-box" id="login-box">
-    <div class="header"><?=$this->lang->line('signin')?></div>
+    #titleFont{
+        color: red; font-weight: bold;
+    }
+</style>
+
+
+<div class="form-box background" id="login-box">
+    <div class="header" id="titleFont"><?=$this->lang->line('signin')?></div>
     <form method="post">
 
         <!-- style="margin-top:40px;" -->
@@ -52,7 +62,7 @@
                 </div>
             <?php } ?>
             
-            <input type="submit" class="btn btn-lg btn-success btn-block" value="SIGN IN" />
+            <input type="submit" class="btn btn-lg btn-success btn-block"  value="SIGN IN" />
         </div>
     </form>
 </div>
