@@ -1,7 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Onlineexamreport extends Admin_Controller {
-
+/*
+| -----------------------------------------------------
+| PRODUCT NAME: 	INILABS SCHOOL MANAGEMENT SYSTEM
+| -----------------------------------------------------
+| AUTHOR:			INILABS TEAM
+| -----------------------------------------------------
+| EMAIL:			info@inilabs.net
+| -----------------------------------------------------
+| COPYRIGHT:		RESERVED BY INILABS IT
+| -----------------------------------------------------
+| WEBSITE:			http://inilabs.net
+| -----------------------------------------------------
+*/
 	function __construct() {
 		parent::__construct();
 		$this->load->model('student_m');
@@ -10,21 +22,13 @@ class Onlineexamreport extends Admin_Controller {
 		$this->load->model('subject_m');
 		$this->load->model('online_exam_m');
 		$this->load->model('studentrelation_m');
-        $this->load->model('online_exam_user_status_m');
-// --------------------------------------------
-        $this->load->model('OnlineExamAttend_m');
-// --------------------------------------------
+		$this->load->model('online_exam_user_status_m');
 		$language = $this->session->userdata('lang');
 		$this->lang->load('onlineexamreport', $language);
 	}
 
 
 	public function index() {
-
-// --------------------Start------------------------
-        $this->data['classes']=$this->classes_m->get_all_classes();
-// --------------------End------------------------
-
 		$this->data['headerassets'] = array(
 			'css' => array(
 				'assets/select2/css/select2.css',
@@ -40,107 +44,6 @@ class Onlineexamreport extends Admin_Controller {
 		$this->data["subview"] 		= "report/onlineexam/onlineexamReportView";
 		$this->load->view('_layout_main', $this->data);
 	}
-
-
-// --------------------------------------------
-
-	public function get_all_exam_by_classes(){
-		$classesID=$this->input->post('classesID');
-		$onlineExam=$this->OnlineExamAttend_m->get_all_exam_by_classes($classesID);
-
-		$onlineExam_selectBox='<option value="0">Please Select</option>';
-		if (count($onlineExam)>0) {
-			
-			foreach ($onlineExam as $row) {
-				$onlineExam_selectBox .= '<option value="'.$row->onlineExamID.'">'.$row->name.'</option>';
-			}
-			
-		}
-		echo json_encode($onlineExam_selectBox);
-
-		// if($classesID){
-		// 	$this->data['examAttend']=$this->examAttend_m->get_all_exam_by_classes($classesID);
-		// }
-	}
-
-	public function get_summary(){
-		$classesID=$this->input->post('classesID');
-		$onlineExamID=$this->input->post('onlineExamID');
-		$totalStudent=$this->OnlineExamAttend_m->get_totalStudent($classesID);
-		$totalAttend=$this->OnlineExamAttend_m->get_totalExamAttend($classesID, $onlineExamID);
-		$studentList=$this->OnlineExamAttend_m->get_student_list($classesID, $onlineExamID);
-		$onlineExam=$this->OnlineExamAttend_m->get_exam_by_classes($classesID, $onlineExamID);
-
-		$totalPass=0;
-		$totalFail=0;
-
-		if(count($studentList)>0){
-			foreach($studentList as $row){
-				if($row->totalObtainedMark>=$onlineExam->percentage){
-					$totalPass++;
-				}
-				elseif($row->totalObtainedMark<$onlineExam->percentage){
-					$totalFail++;
-				}
-			}
-		}
-
-		$summary=array(
-			'totalStudents' => $totalStudent,
-			'totalAttend' => $totalAttend,
-			'totalPass' => $totalPass,
-			'totalFail' => $totalFail
-		);
-		echo json_encode($summary);
-
-	}
-
-	public function get_pass_fail_student_list(){
-		$classesID=$this->input->post('classesID');
-		$onlineExamID=$this->input->post('onlineExamID');
-		$studentList=$this->OnlineExamAttend_m->get_student_list($classesID, $onlineExamID);
-		$onlineExam=$this->OnlineExamAttend_m->get_exam_by_classes($classesID, $onlineExamID);
-
-		$passIndex=1;
-		$failIndex=1;
-		$passTableRow = '';
-		$failTableRow = '';
-
-		if(count($studentList)>0){
-			foreach($studentList as $row){
-				if($row->totalObtainedMark>=$onlineExam->percentage){
-					$passTableRow .='<tr>';
-					$passTableRow .='<td>'.$passIndex++.'</td>';
-					$passTableRow .= '<td>'.$row->roll.'</td>';
-					$passTableRow .= '<td>'.$row->name.'</td>';
-					$passTableRow .= '<td>'.$row->totalMark.'</td>';
-					$passTableRow .= '<td>'.$row->totalObtainedMark.'</td>';
-					$passTableRow .= '<td>'.$row->totalPercentage.' %</td>';
-					$passTableRow .='</tr>';
-				}
-				elseif($row->totalObtainedMark<$onlineExam->percentage){
-					$failTableRow .='<tr>';
-					$failTableRow .='<td>'.$failIndex++.'</td>';
-					$failTableRow .= '<td>'.$row->roll.'</td>';
-					$failTableRow .= '<td>'.$row->name.'</td>';
-					$failTableRow .= '<td>'.$row->totalMark.'</td>';
-					$failTableRow .= '<td>'.$row->totalObtainedMark.'</td>';
-					$failTableRow .= '<td>'.$row->totalPercentage.' %</td>';
-					$failTableRow .='</tr>';
-				}
-				
-			}
-		}
-
-		$tableList=array(
-			'passTableRow' => $passTableRow,
-			'failTableRow' => $failTableRow
-		);
-		echo json_encode($tableList);
-	}
-
-// --------------------------------------------
-
 
 	protected function rules() {
 		$rules = array(

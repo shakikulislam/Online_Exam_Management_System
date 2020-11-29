@@ -12,17 +12,6 @@ class Classes_m extends MY_Model {
 		parent::__construct();
 	}
 
-// -------------------------------------
-	function get_all_classes(){
-		$query=$this->db->get('classes');
-		return $query->result();
-	}
-
-	
-
-// -------------------------------------
-
-
 	public function get_join_classes() 
 	{
 		$this->db->select('*');
