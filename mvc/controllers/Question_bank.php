@@ -1,19 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Question_bank extends Admin_Controller {
-    /*
-    | -----------------------------------------------------
-    | PRODUCT NAME: 	INILABS SCHOOL MANAGEMENT SYSTEM
-    | -----------------------------------------------------
-    | AUTHOR:			INILABS TEAM
-    | -----------------------------------------------------
-    | EMAIL:			info@inilabs.net
-    | -----------------------------------------------------
-    | COPYRIGHT:		RESERVED BY INILABS IT
-    | -----------------------------------------------------
-    | WEBSITE:			http://inilabs.net
-    | -----------------------------------------------------
-    */
+
     function __construct() {
         parent::__construct();
         $this->load->model("question_bank_m");
@@ -255,6 +243,7 @@ class Question_bank extends Admin_Controller {
         $this->data['answers']   = [];
         $this->data['typeID']    = 0;
         $this->data['totalOptionID'] = 0;
+        $file = "this is file";
 
         if($_POST) {
             $postOption = inicompute($this->input->post("option"));
@@ -282,7 +271,8 @@ class Question_bank extends Admin_Controller {
                     "create_date" => date("Y-m-d H:i:s"),
                     "modify_date" => date("Y-m-d H:i:s"),
                     "create_userID" => $usertypeID,
-                    "create_usertypeID" => $loginuserID
+                    "create_usertypeID" => $loginuserID,
+                    "file" => $file
                 );
                 $question_bank['upload'] = $this->upload_data['file']['file_name'];
 

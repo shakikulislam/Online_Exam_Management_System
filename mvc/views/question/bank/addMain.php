@@ -203,14 +203,6 @@
                         </span>
                     </div>
 
-                    <div class="form-group" id="pdfDiv">
-                        <label for="" class="col-sm-2 control-label">PDF <span class='text-red'>*</span> </label>
-                        <div class="col-sm-6">
-                            
-                            <input type="file" accept=".pdf" name="pdfFile" id="pdfFile" class="form-control">
-                        </div>
-                    </div>
-
                     <div id="in"></div>
 
                     <div class="form-group">
@@ -218,8 +210,7 @@
                             <input type="submit" class="btn btn-success" value="<?=$this->lang->line("add_class")?>" >
                         </div>
                     </div>
-                    
-                    
+
 
                 </form>
             </div>
@@ -296,7 +287,6 @@
     $('#explanation').jqte();
     $(function () {
         $('#totalOptionDiv').hide();
-        $('#pdfDiv').hide();
     });
 
     $(document).ready(function() {
@@ -311,16 +301,9 @@
         var type = $(this).val();
         if(type == 0) {
             $('#totalOptionDiv').hide();
-            $('#pdfDiv').hide();
-        }
-        else if(type==4){
-            $('#totalOptionDiv').hide();
-            $('#pdfDiv').show();
-        }
-        else {
+        } else {
             $('#totalOption').val(0);
             $('#totalOptionDiv').show();
-            $('#pdfDiv').hide();
         }
 
     });

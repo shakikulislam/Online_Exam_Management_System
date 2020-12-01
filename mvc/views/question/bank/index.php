@@ -27,9 +27,9 @@
                     <table id="example1" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
-                                <th class="col-sm-2"><?=$this->lang->line('slno')?></th>
+                                <th class="col-sm-1"><?=$this->lang->line('slno')?></th>
                                 <th class="col-sm-1"><?=$this->lang->line('question_bank_level')?></th>
-                                <th class="col-sm-3"><?=$this->lang->line('question_bank_question')?></th>
+                                <th class="col-sm-4"><?=$this->lang->line('question_bank_question')?></th>
                                 <th class="col-sm-1"><?=$this->lang->line('question_bank_group')?></th>
                                 <th class="col-sm-1"><?=$this->lang->line('question_bank_type')?></th>
                                 <?php if(permissionChecker('question_bank_edit') || permissionChecker('question_bank_delete') || permissionChecker('question_bank_view')) { ?>

@@ -52,7 +52,7 @@
                         <table>
                             <tr>
                                 <td><h4>Total Students </h4></td>
-                                <td><h4 style="color:green"> = <b id="totalStudents"></b></h4></td>
+                                <td><h4 style="color:green"> = <b id="totalStudents">0</b></h4></td>
                             </tr>
                         </table>
                     </div>
@@ -60,11 +60,11 @@
                         <table>
                             <tr>
                                 <td><h4>Attend Students </h4></td>
-                                <td><h4 style="color:green"> = <b id="totalAttend"></b></h4></td>
+                                <td><h4 style="color:green"> = <b id="totalAttend">0</b></h4></td>
                             </tr>
                             <tr>
                                 <td><h4>Absent Students </h4></td>
-                                <td><h4 style="color:red"> = <b id="totalAbsent"></b></h4></td>
+                                <td><h4 style="color:red"> = <b id="totalAbsent">0</b></h4></td>
                             </tr>
                         </table>
                     </div>
@@ -72,11 +72,11 @@
                     <table>
                             <tr>
                                 <td><h4>Pass Students </h4></td>
-                                <td><h4 style="color:green"> = <b id="passStudents"></b></h4></td>
+                                <td><h4 style="color:green"> = <b id="passStudents">0</b></h4></td>
                             </tr>
                             <tr>
                                 <td><h4>Fail Students</h4></td>
-                                <td><h4 style="color:red"> = <b id="failStudents"></b></h4></td>
+                                <td><h4 style="color:red"> = <b id="failStudents">0</b></h4></td>
                             </tr>
                         </table>
                     </div>
