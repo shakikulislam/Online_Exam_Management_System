@@ -207,7 +207,7 @@
                         <label for="" class="col-sm-2 control-label">PDF <span class='text-red'>*</span> </label>
                         <div class="col-sm-6">
                             
-                            <input type="file" accept=".pdf" name="pdfFile" id="pdfFile" class="form-control">
+                            <input type="file" accept="image/.pdf" name="pdfFile" id="pdfFile" class="form-control">
                         </div>
                     </div>
 

@@ -244,26 +244,7 @@ class Question_bank extends Admin_Controller {
         $this->data['typeID']    = 0;
         $this->data['totalOptionID'] = 0;
 
-        
-
-        // if(!empty($_FILES[]))
-
-        $newFileName=NULL;
-        $questionFile=array(
-            'upload_path' => './uploads/question_files',
-            'allowed_types' => 'jpg|jpeg|png|pdf',
-            'file_name'=>$newFileName
-        );
-
-        $this->load->library("upload", $questionFile);
-        if(!$this->upload->do_upload('pdfFile')){
-            echo $this->upload->display_errors();
-        }
-        else{
-            $fileData=$this->upload->data();
-            $fileName=$fileData['file_name'];
-            $newFileName=$fileName;
-        }
+        if(!empty($_FILES[]))
 
         if($_POST) {
             $postOption = inicompute($this->input->post("option"));
@@ -291,10 +272,8 @@ class Question_bank extends Admin_Controller {
                     "create_date" => date("Y-m-d H:i:s"),
                     "modify_date" => date("Y-m-d H:i:s"),
                     "create_userID" => $usertypeID,
-                    "create_usertypeID" => $loginuserID,
-                    "file" => $newFileName
+                    "create_usertypeID" => $loginuserID
                 );
-                
                 
                 $question_bank['upload'] = $this->upload_data['file']['file_name'];
 
