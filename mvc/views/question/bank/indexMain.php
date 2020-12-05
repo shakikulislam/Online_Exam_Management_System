@@ -62,18 +62,11 @@
                                     </td>
                                     <?php if(permissionChecker('question_bank_edit') || permissionChecker('question_bank_delete') || permissionChecker('question_bank_view')) { ?>
 
-                                        <?php if($question_bank->typeNumber==4){ ?>
-                                            <td data-title="<?=$this->lang->line('action')?>">
-                                            <?php echo btn_view('question_bank/view/'.$question_bank->questionBankID, $this->lang->line('view')) ?>
-                                            <?php echo btn_delete('question_bank/delete/'.$question_bank->questionBankID, $this->lang->line('delete')) ?>
-                                        </td>
-                                        <?php }else {?>
                                         <td data-title="<?=$this->lang->line('action')?>">
                                             <?php echo btn_view('question_bank/view/'.$question_bank->questionBankID, $this->lang->line('view')) ?>
                                             <?php echo btn_edit('question_bank/edit/'.$question_bank->questionBankID, $this->lang->line('edit')) ?>
                                             <?php echo btn_delete('question_bank/delete/'.$question_bank->questionBankID, $this->lang->line('delete')) ?>
                                         </td>
-                                        <?php }?>
                                     <?php } ?>
                                 </tr>
                             <?php $i++; }} ?>
