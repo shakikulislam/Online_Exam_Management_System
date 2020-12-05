@@ -2,19 +2,7 @@
 
 use Omnipay\Omnipay;
 Class Take_exam extends Admin_Controller {
-    /*
-    | -----------------------------------------------------
-    | PRODUCT NAME: 	INILABS SCHOOL MANAGEMENT SYSTEM
-    | -----------------------------------------------------
-    | AUTHOR:			INILABS TEAM
-    | -----------------------------------------------------
-    | EMAIL:			info@inilabs.net
-    | -----------------------------------------------------
-    | COPYRIGHT:		RESERVED BY INILABS IT
-    | -----------------------------------------------------
-    | WEBSITE:			http://inilabs.net
-    | -----------------------------------------------------
-    */
+
     function __construct() {
         parent::__construct();
         $this->load->model('online_exam_m');
@@ -132,6 +120,15 @@ Class Take_exam extends Admin_Controller {
         } else {
             $this->data["subview"] = "online_exam/take_exam/index";
             $this->load->view('_layout_main', $this->data);
+        }
+    }
+
+    public function download($questionBankID){
+        if(!empty($questionBankID)){
+            $this->load->helper('download');
+            $fileInfo=$this->Question_bank_m->get_question_bank(array('questionBankID'=>$questionBankID));
+            $file='uploads/question_files/'.$fileInfo['file'];
+            force_download($file, NULL);
         }
     }
 

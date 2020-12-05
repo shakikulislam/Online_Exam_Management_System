@@ -313,7 +313,7 @@
             $('#totalOptionDiv').hide();
             $('#pdfDiv').hide();
         }
-        else if(type==4){
+        else if(type == 4) {
             $('#totalOptionDiv').hide();
             $('#pdfDiv').show();
         }

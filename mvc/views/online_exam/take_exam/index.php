@@ -18,11 +18,10 @@
                             <thead>
                             <tr>
                                 <th class="col-sm-1"><?=$this->lang->line('slno')?></th>
-                                <th class="col-sm-3"><?=$this->lang->line('take_exam_name')?></th>
+                                <th class="col-sm-6"><?=$this->lang->line('take_exam_name')?></th>
                                 <th class="col-sm-2"><?=$this->lang->line('take_exam_status')?></th>
                                 <th class="col-sm-1"><?=$this->lang->line('take_exam_duration')?></th>
-                                <th class="col-sm-1"><?=$this->lang->line('take_exam_payment')?></th>
-                                <th class="col-sm-2"><?=$this->lang->line('take_exam_cost')?></th>
+                                
                                 <th class="col-sm-2"><?=$this->lang->line('action')?></th>
                             </tr>
                             </thead>
@@ -124,12 +123,11 @@
                                         <td data-title="<?=$this->lang->line('take_exam_duration')?>">
                                             <?php echo $onlineExam->duration; ?>
                                         </td>
-                                        <td data-title="<?=$this->lang->line('take_exam_payment')?>">
-                                            <?=($onlineExam->paid == 1) ? $this->lang->line('take_exam_paid') : $this->lang->line('take_exam_free') ;?>
-                                        </td> 
-                                        <td data-title="<?=$this->lang->line('take_exam_cost')?>">
-                                            <?=($onlineExam->paid == 1) ? number_format($onlineExam->cost, '2') : number_format($onlineExam->cost, '2');?> <?=$siteinfos->currency_code?>
-                                        </td>
+                                        
+                                        
+
+
+
                                         <td data-title="<?=$this->lang->line('action')?>">
                                             <?php
                                                 $paidStatus = 0;
@@ -159,7 +157,7 @@
                                                     $paidStatus = 1;
                                                 }
                                             ?>
-                                            <button class="btn btn-success btn-xs mrg" onclick="newPopup('<?=base_url('take_exam/instruction/'.$onlineExam->onlineExamID)?>', '<?=$paidStatus?>', '<?=$onlineExam->onlineExamID?>')" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?=$this->lang->line('panel_title')?>"><i class="fa fa-columns"></i></button>
+                                            <button class="btn btn-success btn-xs " onclick="newPopup('<?=base_url('take_exam/instruction/'.$onlineExam->onlineExamID)?>', '<?=$paidStatus?>', '<?=$onlineExam->onlineExamID?>')" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?=$this->lang->line('panel_title')?>"><i class="fa fa-columns"></i> - Take Exam</button>
 
                                             <?php
                                                 if($onlineExam->paid && ($onlineExam->examStatus == 2) && !($paymentExpireStatus))  {
