@@ -46,10 +46,4 @@ class Question_bank_m extends MY_Model {
     {
         parent::delete($id);
     }
-
-    public function download_question($questionBankID){
-        $this->db->where('questionBankID', $questionBankID);
-        $result=$this->db->get($this->_table_name);
-        return $result->row();
-    }
 }

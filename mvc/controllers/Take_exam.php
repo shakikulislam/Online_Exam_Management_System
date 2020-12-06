@@ -126,8 +126,9 @@ Class Take_exam extends Admin_Controller {
     public function download($questionBankID){
         if(!empty($questionBankID)){
             $this->load->helper('download');
-            $fileInfo=$this->Question_bank_m->get_question_bank(array('questionBankID'=>$questionBankID));
-            $file='uploads/question_files/'.$fileInfo['file'];
+            $fileInfo=$this->question_bank_m->download_question($questionBankID);
+            $file='uploads/question_files/'.$fileInfo->file;
+            
             force_download($file, NULL);
         }
     }

@@ -104,6 +104,8 @@
                                                     <?php
                                                 }
                                             } 
+                                            //--------------------------------
+
                                             if ($question->typeNumber == 4) {?>
                                             <div class="file-box">
                                                 <div class="box-content">
@@ -111,11 +113,14 @@
                                                     <div class="preview">
                                                         <embed src="<?php echo base_url('uploads/question_files/'.$question->file) ?>" width="100%" height="100%">
                                                     </div>
-                                                    <a href="<?php echo base_url('Take_exam/download/'.$question->questionBankID) ?>" class="dwn">Download</a>
+                                                    <a href="<?php echo base_url('Take_exam/download/'.$question->questionBankID) ?>" class="btn btn-success">Download</a>
+                                                    <input type="file" name="ansFile" id="ansFile" class="custom-file-input">
+                                                    
                                                 </div>
                                             </div>
                                                 
                                             <?php } ?>
+                                            <!-- ------------------------------------------end -->
                                         </tr>
                                     </table>
                                 </div>
