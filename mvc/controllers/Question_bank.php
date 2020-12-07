@@ -245,7 +245,7 @@ class Question_bank extends Admin_Controller {
         $this->data['totalOptionID'] = 0;
 
         
-
+// --------------------------Start-------------------------
         // if(!empty($_FILES[]))
 
         $newFileName=NULL;
@@ -264,6 +264,9 @@ class Question_bank extends Admin_Controller {
             $fileName=$fileData['file_name'];
             $newFileName=$fileName;
         }
+        
+// --------------------------Start-------------------------
+
 
         if($_POST) {
             $postOption = inicompute($this->input->post("option"));

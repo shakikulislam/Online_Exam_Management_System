@@ -33,7 +33,7 @@
                 </ul>
             </div>
 
-            <form id="answerForm" method="post">
+            <form id="answerForm" method="post" enctype="multipart/form-data">
                 <div class="box-body step-content">
                     <input style="display:none" type="text" name="studentfinishstatus">
                 <?php
@@ -42,7 +42,6 @@
                         $question        = isset($questions[$onlineExamQuestion->questionID]) ? $questions[$onlineExamQuestion->questionID] : '';
                         $questionOptions = isset($options[$onlineExamQuestion->questionID]) ? $options[$onlineExamQuestion->questionID] : [];
                         $questionAnswers = isset($answers[$onlineExamQuestion->questionID]) ? $answers[$onlineExamQuestion->questionID] : [];
-
 
                         if($question != '') {
                             if($question->typeNumber == 1 || $question->typeNumber == 2) {
@@ -104,22 +103,22 @@
                                                     <?php
                                                 }
                                             } 
-                                            //--------------------------------
+
+                                            //-------------------------------------------------
 
                                             if ($question->typeNumber == 4) {?>
                                             <div class="file-box">
                                                 <div class="box-content">
                                                 <!-- <h3>PDF Here</h3> -->
-                                                    <div class="preview">
-                                                        <?php if($question->file != "" || $question->file != NULL) {?>
-                                                            <embed src="<?php echo base_url('uploads/question_files/'.$question->file) ?>" width="100%" height="100%">
-                                                        <?php } ?>
-                                                    </div>
                                                     <?php if($question->file != "" || $question->file != NULL) {?>
+                                                        <div class="preview">
+                                                            <embed src="<?php echo base_url('uploads/question_files/'.$question->file) ?>" width="100%" height="50%">
+                                                        </div>
                                                         <a href="<?php echo base_url('Take_exam/download/'.$question->questionBankID) ?>" class="btn btn-success">Download</a>
                                                     <?php } ?>
                                                     
-                                                    <input type="file" name="ansFile" id="ansFile" class="custom-file-input">
+                                                    <!-- <input type="file" name="ansFile" id="ansFile" class="custom-file-input"> -->
+                                                    <input type="file" accept=".pdf" name="ansFile" id="ansFile" class="form-control">
                                                     
                                                 </div>
                                             </div>
@@ -137,6 +136,7 @@
                     echo "<p class='text-center'>".$this->lang->line('take_exam_no_question')."</p>";
                 } ?>
                 <div class="question-answer-button">
+                    
                     <button class="btn oe-btn-answered btn-prev" type="button" name="" id="prevbutton" disabled>
                         <i class="fa fa-angle-left"></i> <?=$this->lang->line('take_exam_previous')?>
                     </button>

@@ -39,18 +39,19 @@ Class Take_exam extends Admin_Controller {
         $usertypeID  = $this->session->userdata('usertypeID');
         $loginuserID = $this->session->userdata('loginuserID');
 
+// --------------------------Start-------------------------
         $this->data['student'] = $this->student_m->get_student($loginuserID);
             
-            $array['studentID'] = $this->data['student']->studentID;
-            $array['classesID'] = $this->data['student']->classesID;
+        $array['studentID'] = $this->data['student']->studentID;
+        $array['classesID'] = $this->data['student']->classesID;
 
-            $this->data['payment']=$this->paymentsettings_m->get_payment($array);
-            // $payment=$this->paymentsettings_m->get_payment($array);
+        $this->data['payment']=$this->paymentsettings_m->get_payment($array);
+        // $payment=$this->paymentsettings_m->get_payment($array);
 
-            // echo "<pre>";
-            // print_r($payment);
-            // die();
-
+        // echo "<pre>";
+        // print_r($payment);
+        // die();
+// ---------------------------------------------------
            
 
         $this->data['userSubjectPluck'] = [];
@@ -123,6 +124,7 @@ Class Take_exam extends Admin_Controller {
         }
     }
 
+// --------------------------Start-------------------------
     public function download($questionBankID){
         if(!empty($questionBankID)){
             $this->load->helper('download');
@@ -132,7 +134,7 @@ Class Take_exam extends Admin_Controller {
             force_download($file, NULL);
         }
     }
-
+// ---------------------------------------------------
     public function show() {
         $this->data['headerassets'] = array(
             'css' => array(
@@ -145,6 +147,26 @@ Class Take_exam extends Admin_Controller {
                 'assets/inilabs/form/fuelux.min.js'
             )
         );
+
+        //--------------------------------Start-------------------
+
+        $newFileName=NULL;
+        $answerFile=array(
+            'upload_path' => './uploads/question_files/answer_files',
+            'allowed_types' => 'pdf'
+        );
+
+        $this->load->library("upload", $answerFile);
+        if(!$this->upload->do_upload('ansFile')){
+            echo $this->upload->display_errors();
+        }
+        else{
+            $fileData=$this->upload->data();
+            $fileName=$fileData['file_name'];
+            $newFileName=$fileName;
+        }
+
+        //-------------------------------------------------------------
 
 
         $userID = $this->session->userdata("loginuserID");
@@ -411,6 +433,8 @@ Class Take_exam extends Admin_Controller {
                         }
                     }
 
+                    
+
                     $this->online_exam_user_status_m->insert([
                         'onlineExamID' => $this->data['onlineExam']->onlineExamID,
                         'time' => $time,
@@ -428,6 +452,13 @@ Class Take_exam extends Admin_Controller {
                         'totalMark' => $totalQuestionMark,
                         'totalObtainedMark' => $totalCorrectMark,
                         'totalPercentage' => (($totalCorrectMark > 0 && $totalQuestionMark > 0) ? (($totalCorrectMark/$totalQuestionMark)*100) : 0),
+                        
+                        //---------------------Start-----------------------
+
+                        'answerFile' => $newFileName,
+                        
+                        //-------------------End--------------------------
+
                         'statusID' => $statusID,
                     ]);
 
