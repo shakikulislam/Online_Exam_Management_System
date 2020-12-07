@@ -111,9 +111,14 @@
                                                 <div class="box-content">
                                                 <!-- <h3>PDF Here</h3> -->
                                                     <div class="preview">
-                                                        <embed src="<?php echo base_url('uploads/question_files/'.$question->file) ?>" width="100%" height="100%">
+                                                        <?php if($question->file != "" || $question->file != NULL) {?>
+                                                            <embed src="<?php echo base_url('uploads/question_files/'.$question->file) ?>" width="100%" height="100%">
+                                                        <?php } ?>
                                                     </div>
-                                                    <a href="<?php echo base_url('Take_exam/download/'.$question->questionBankID) ?>" class="btn btn-success">Download</a>
+                                                    <?php if($question->file != "" || $question->file != NULL) {?>
+                                                        <a href="<?php echo base_url('Take_exam/download/'.$question->questionBankID) ?>" class="btn btn-success">Download</a>
+                                                    <?php } ?>
+                                                    
                                                     <input type="file" name="ansFile" id="ansFile" class="custom-file-input">
                                                     
                                                 </div>
