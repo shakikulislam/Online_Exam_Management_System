@@ -42,7 +42,7 @@ class Onlineexamreport extends Admin_Controller {
 	}
 
 
-// --------------------------------------------
+// ------------------Start--------------------------
 
 	public function get_all_exam_by_classes(){
 		$classesID=$this->input->post('classesID');
@@ -138,6 +138,50 @@ class Onlineexamreport extends Admin_Controller {
 		);
 		echo json_encode($tableList);
 	}
+	
+	public function get_pdf_ans_student_list(){
+		$classesID=$this->input->post('classesID');
+		$onlineExamID=$this->input->post('onlineExamID');
+		$studentList=$this->OnlineExamAttend_m->get_student_list($classesID, $onlineExamID);
+		$onlineExam=$this->OnlineExamAttend_m->get_exam_by_classes($classesID, $onlineExamID);
+
+		$index=1;
+		$tableRow = '';
+
+		if(count($studentList)>0){
+			foreach($studentList as $row){
+				if($row->totalObtainedMark == "0" || $row->answerFile != NULL || $row->answerFile != ""){
+					$tableRow .='<tr>';
+					$tableRow .='<td>'.$index++.'</td>';
+					$tableRow .= '<td>'.$row->roll.'</td>';
+					$tableRow .= '<td>'.$row->name.'</td>';
+					$tableRow .= '<td>'.$row->totalMark.'</td>';
+					$tableRow .= '<td> <a href="download_answer_file/' .$row->onlineExamUserStatus .'" class="btn btn-sm btn-info">Download File</a></td>';
+					$tableRow .= '<td>Add Answer</td>';
+					$tableRow .='<td style="visibility:hidden" >'.$row->onlineExamUserStatus.'</td>';
+					$tableRow .='</tr>';
+				}
+				
+			}
+		}
+
+		$tableList=array(
+			'tableRow' => $tableRow
+		);
+		echo json_encode($tableList);
+	}
+
+	public function download_answer_file($onlineExamUserStatus){
+        if(!empty($onlineExamUserStatus)){
+            $this->load->helper('download');
+            $fileInfo=$this->OnlineExamAttend_m->download_answer_file($onlineExamUserStatus);
+            $file='uploads/question_files/answer_files/'.$fileInfo->answerFile;
+            // echo ('<pre>');
+			// print_r($file);
+			// die();
+            force_download($file, NULL);
+        }
+    }
 
 // --------------------------------------------
 

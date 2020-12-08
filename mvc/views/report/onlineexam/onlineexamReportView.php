@@ -29,8 +29,9 @@
                     </select>
                 </div> <!-- col-sm-4 -->
                 <div class="col-sm-4">
-                    <label></label>
-                    <input type="submit" value="Search" id="searchResult" class="form-control btn btn-success">
+                    <input type="submit" value="Add Result" id="addResult" class="form-control btn btn-info">
+                    <br><br>
+                    <input type="submit" value="Search Result" id="searchResult" class="form-control btn btn-success">
                 </div> <!-- col-sm-4 -->
             </div> <!-- form-group -->
             
@@ -38,7 +39,7 @@
     </div><!-- Body -->
 </div><!-- /.box -->
 
-<div class="row">
+<div class="row" id="summaryRow">
     <div class="col-sm-12">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -84,9 +85,9 @@
             </div>
         </div>
     </div><!-- col-sm-12 -->
-</div><!-- row -->
+</div><!-- summary row -->
 
-<div class="row">
+<div class="row" id="resultRow">
     <div class="col-sm-6">
         <div class="panel panel-success">
             <div class="panel-heading">
@@ -143,11 +144,43 @@
         </div> <!-- panel -->
     </div><!-- col-sm-6 -->
 
-</div><!-- row -->
+</div><!-- search result row -->
  
+<div class="row" id="addResultRow">
+    <div class="col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">Add Result</div>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Roll/ID</th>
+                            <th style="width: 40%;">Name</th>
+                            <th>Total Mark</th>
+                            <th>Download</th>
+                            <th>Add</th>
+                            <th style="visibility:hidden; width:10px">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdfStudentList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- add result row -->
+
 <!-- <div class="box" id="load_onlineexamreport"></div> -->
 
 <script type="text/javascript">
+
+    $(function(){
+        $('#summaryRow').hide();
+        $('#resultRow').hide();
+        $('#addResultRow').hide();
+    });
     
     $(document).on('change','#classes',function(){
         // alert('Work...');
@@ -167,6 +200,11 @@
     });
 
     $(document).on('click','#searchResult',function(){
+
+        $('#summaryRow').show();
+        $('#resultRow').show();
+        $('#addResultRow').hide();
+
         var classesID=$('#classes').val();
         var onlineExamID=$('#online_exam').val();
         $.ajax({
@@ -208,156 +246,28 @@
 
             }
         });
-        
-        // alert(classesID);
     });
-    // $(document).ready(function(){
-    //     $('#classes').change(function(){
-    //         var classesID= $('#classes').val();
-    //         if(classesID != ''){
-    //             $.ajax({
-    //                 type:"POST",
-    //                 url:"<?php echo base_url('Onlineexamreport/get_all_exam_by_classes');?>",
-    //                 data:{classesID:classesID},
-    //                 dataType: "html",
-    //                 success:function(data){
-    //                     $('#online_exam').html(data);
-    //                 }
-    //             })
-    //         }
-    //     });
-    // });
-//-----------------------------------------------------------
 
-    // $(document).on('change', "#onlineexamID, #classesID", function() {
-    //     var id = $(this).val();
-    //     if(id != '0') {
-    //         divShow()
-    //     }
-    // })
+    $(document).on('click','#addResult', function(){
+        $('#summaryRow').hide();
+        $('#resultRow').hide();
+        $('#addResultRow').show();
 
-    // $(document).on('change', "#classesID", function() {
-    //     var classesID = $(this).val();
-    //     if(classesID == '0') {
-    //         $('#sectionID').html('<option value="">'+"<?=$this->lang->line("onlineexamreport_please_select")?>"+'</option>');
-    //         $('#sectionID').val('');
+        var classesID=$('#classes').val();
+        var onlineExamID=$('#online_exam').val();
 
-    //         $('#studentID').html('<option value="0">'+"<?=$this->lang->line("onlineexamreport_please_select")?>"+'</option>');
-    //         $('#studentID').val(0);
+        $.ajax({
+            url:"<?php echo base_url('onlineexamreport/get_pdf_ans_student_list') ?>",
+            type:"POST",
+            data:{'classesID':classesID, 'onlineExamID':onlineExamID},
+            dataType:"json",
+            success:function(data){
+                var pdfStudentList=data['tableRow'];
+
+                $('#pdfStudentList').html(pdfStudentList);
+                
+            }
+        });
+    });
     
-    //     } else {
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: "<?=base_url('onlineexamreport/getSection')?>",
-    //             data: {"classesID" : classesID},
-    //             dataType: "html",
-    //             success: function(data) {
-    //                $('#sectionID').html(data);
-    //             }
-    //         });
-
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: "<?=base_url('onlineexamreport/getStudent')?>",
-    //             data: {'classesID' : classesID, 'sectionID' : 0},
-    //             dataType: "html",
-    //             success: function(data) {
-    //                $('#studentID').html(data);
-    //             }
-    //         });
-    //     }
-    // });
-
-    // $(document).on('change', "#sectionID", function() {
-    //     var classesID = $('#classesID').val();
-    //     var sectionID = $('#sectionID').val();
-
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: "<?=base_url('onlineexamreport/getStudent')?>",
-    //         data: {'classesID' : classesID, 'sectionID' : sectionID},
-    //         dataType: "html",
-    //         success: function(data) {
-    //            $('#studentID').html(data);
-    //         }
-    //     });
-    // });
-
-    // $(document).on('click', "#get_onlineexam", function() {
-    //     var error = 0 ;
-    //     var field = {
-    //         'onlineexamID'  : $('#onlineexamID').val(), 
-    //         'classesID'     : $('#classesID').val(), 
-    //         'sectionID'     : $('#sectionID').val(), 
-    //         'studentID'     : $('#studentID').val(), 
-    //         'statusID'      : $('#statusID').val(),  
-    //     }
-
-    //     error = validation_checker(field, error);
-
-    //     if(error === 0) {
-    //         makingPostDataPreviousofAjaxCall(field);
-    //     }
-    // });
-
-    // function validation_checker(field, error) {
-    //     if(field['onlineexamID'] == 0 && field['classesID'] == 0) {
-    //         $('#onlineexamDiv').addClass('has-error');
-    //         $('#classesDiv').addClass('has-error');
-    //         error++;
-    //     } else {
-    //         $('#onlineexamDiv').removeClass('has-error');
-    //         $('#classesDiv').removeClass('has-error');
-    //     }
-
-    //     if (field['statusID'] == 0) {
-    //         $('#statusDiv').addClass('has-error');
-    //         error++;
-    //     } else {
-    //         $('#statusDiv').removeClass('has-error');
-    //     }
-
-    //     return error;
-    // }
-
-    // function makingPostDataPreviousofAjaxCall(field) {
-    //     passData = field;
-    //     ajaxCall(passData);
-    // }
-
-    // function ajaxCall(passData) {
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: "<?=base_url('onlineexamreport/getUserList')?>",
-    //         data: passData,
-    //         dataType: "html",
-    //         success: function(data) {
-    //             var response = JSON.parse(data);
-    //             renderLoder(response, passData);
-    //         }
-    //     });
-    // }
-
-    // function renderLoder(response, passData) {
-    //     if(response.status) {
-    //         $('#load_onlineexamreport').html(response.render);
-    //         for (var key in passData) {
-    //             if (passData.hasOwnProperty(key)) {
-    //                 $('#'+key).parent().removeClass('has-error');
-    //             }
-    //         }
-    //     } else {
-    //         for (var key in passData) {
-    //             if (passData.hasOwnProperty(key)) {
-    //                 $('#'+key).parent().removeClass('has-error');
-    //             }
-    //         }
-
-    //         for (var key in response) {
-    //             if (response.hasOwnProperty(key)) {
-    //                 $('#'+key).parent().addClass('has-error');
-    //             }
-    //         }
-    //     }
-    // }
 </script>

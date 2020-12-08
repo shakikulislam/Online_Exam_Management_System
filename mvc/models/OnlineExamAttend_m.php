@@ -46,6 +46,12 @@ class OnlineExamAttend_m extends MY_Model {
 		$query=$this->db->get();
 		return $query->result();
 	}
+
+	public function download_answer_file($onlineExamUserStatus){
+        $this->db->where('onlineExamUserStatus', $onlineExamUserStatus);
+		$result=$this->db->get('online_exam_user_status');
+		return $result->row();
+    }
 	
 
 }
