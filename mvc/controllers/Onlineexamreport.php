@@ -145,30 +145,34 @@ class Onlineexamreport extends Admin_Controller {
 		$studentList=$this->OnlineExamAttend_m->get_student_list($classesID, $onlineExamID);
 		$onlineExam=$this->OnlineExamAttend_m->get_exam_by_classes($classesID, $onlineExamID);
 
-		$index=1;
-		$tableRow = '';
 
-		if(count($studentList)>0){
-			foreach($studentList as $row){
-				if($row->totalObtainedMark == "0" || $row->answerFile != NULL || $row->answerFile != ""){
-					$tableRow .='<tr>';
-					$tableRow .='<td>'.$index++.'</td>';
-					$tableRow .= '<td>'.$row->roll.'</td>';
-					$tableRow .= '<td>'.$row->name.'</td>';
-					$tableRow .= '<td>'.$row->totalMark.'</td>';
-					$tableRow .= '<td> <a href="download_answer_file/' .$row->onlineExamUserStatus .'" class="btn btn-sm btn-info">Download File</a></td>';
-					$tableRow .= '<td>Add Answer</td>';
-					$tableRow .='<td style="visibility:hidden" >'.$row->onlineExamUserStatus.'</td>';
-					$tableRow .='</tr>';
-				}
+		// if(count($studentList)>0){
+		// 	echo json_encode($studentList);
+		// }
+		// $index=1;
+		// $tableRow = '';
+
+		// if(count($studentList)>0){
+		// 	foreach($studentList as $row){
+		// 		if($row->totalObtainedMark == "0" || $row->answerFile != NULL || $row->answerFile != ""){
+		// 			$tableRow .='<tr>';
+		// 			$tableRow .='<td>'.$index++.'</td>';
+		// 			$tableRow .= '<td>'.$row->roll.'</td>';
+		// 			$tableRow .= '<td>'.$row->name.'</td>';
+		// 			$tableRow .= '<td>'.$row->totalMark.'</td>';
+		// 			$tableRow .= '<td> <a href="onlineexamreport/download_answer_file/' .$row->onlineExamUserStatus .'" class="btn btn-sm btn-info">Download File</a></td>';
+		// 			$tableRow .= '<td>Add Answer</td>';
+		// 			$tableRow .='<td style="visibility:hidden" >'.$row->onlineExamUserStatus.'</td>';
+		// 			$tableRow .='</tr>';
+		// 		}
 				
-			}
-		}
+		// 	}
+		// }
 
-		$tableList=array(
-			'tableRow' => $tableRow
-		);
-		echo json_encode($tableList);
+		// $tableList=array(
+		// 	'tableRow' => $tableRow
+		// );
+		echo json_encode($studentList);
 	}
 
 	public function download_answer_file($onlineExamUserStatus){

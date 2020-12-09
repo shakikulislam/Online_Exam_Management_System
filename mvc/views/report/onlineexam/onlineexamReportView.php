@@ -262,9 +262,72 @@
             data:{'classesID':classesID, 'onlineExamID':onlineExamID},
             dataType:"json",
             success:function(data){
-                var pdfStudentList=data['tableRow'];
+                // var pdfStudentList=data['studentList'];
+                
+                // var index=1;
+		        var tableRow = '';
+                var index=1;
 
-                $('#pdfStudentList').html(pdfStudentList);
+                for (var row in data) {
+                    if(data[row]['totalObtainedMark'] == "0" || data[row]['answerFile'] != NULL || data[row]['answerFile'] != ""){
+                        tableRow += '<tr>';
+                        tableRow += '<td>'+(index++)+'</td>';
+                        tableRow += '<td>'+data[row]['roll']+'</td>';
+                        tableRow += '<td>'+data[row]['name']+'</td>';
+                        tableRow += '<td>'+data[row]['totalMark']+'</td>';
+                        tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ data[row]['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
+                        tableRow += '<td>Add Answer</td>';
+                        tableRow += '<td style="visibility:hidden" >'+data[row]['onlineExamUserStatus']+'</td>';
+                        tableRow += '<tr>';
+                    }
+                    
+                }
+                // for (var index = 0; index < pdfStudentList.length; index++) {
+                //     if(pdfStudentList['totalObtainedMark'] == "0" || pdfStudentList['answerFile'] != NULL || pdfStudentList['answerFile'] != ""){
+                //         tableRow += '<tr>';
+                //         tableRow += '<td>'+(index++)+'</td>';
+                //         tableRow += '<td>'+pdfStudentList['roll']+'</td>';
+                //         tableRow += '<td>'+pdfStudentList['name']+'</td>';
+                //         tableRow += '<td>'+pdfStudentList['totalMark']+'</td>';
+                //         tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ pdfStudentList['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
+                //         tableRow += '<td>Add Answer</td>';
+                //         tableRow += '<td style="visibility:hidden" >'+pdfStudentList['onlineExamUserStatus']+'</td>';
+                //         tableRow += '<tr>';
+                //     }
+                    
+                // }
+
+                // pdfStudentList.forEach(element => {
+                    
+                // });
+
+                // pdfStudentList.forEach(element => {
+                    
+                // });
+
+                // // if(count($pdfStudentList)>0){
+                //    foreach(pdfStudentList as $row){
+                //         if($row->totalObtainedMark == "0" || $row->answerFile != NULL || $row->answerFile != ""){
+                //             $tableRow .='<tr>';
+                //             $tableRow .='<td>'.$index++.'</td>';
+                //             $tableRow .= '<td>'.$row->roll.'</td>';
+                //             $tableRow .= '<td>'.$row->name.'</td>';
+                //             $tableRow .= '<td>'.$row->totalMark.'</td>';
+                //             $tableRow .= '<td> <a href="onlineexamreport/download_answer_file/' .$row->onlineExamUserStatus .'" class="btn btn-sm btn-info">Download File</a></td>';
+                //             $tableRow .= '<td>Add Answer</td>';
+                //             $tableRow .='<td style="visibility:hidden" >'.$row->onlineExamUserStatus.'</td>';
+                //             $tableRow .='</tr>';
+                //         }
+                        
+                //     }
+                // }
+
+
+
+
+
+
+                $('#pdfStudentList').html(tableRow);
                 
             }
         });
