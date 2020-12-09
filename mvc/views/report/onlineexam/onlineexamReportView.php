@@ -172,6 +172,35 @@
     </div>
 </div><!-- add result row -->
 
+<!-- Modal -->
+
+<div class="modal fade" id="downloadAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- <div class="box" id="load_onlineexamreport"></div> -->
 
 <script type="text/javascript">
@@ -275,62 +304,44 @@
                         tableRow += '<td>'+data[row]['roll']+'</td>';
                         tableRow += '<td>'+data[row]['name']+'</td>';
                         tableRow += '<td>'+data[row]['totalMark']+'</td>';
-                        tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ data[row]['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
+                        tableRow += '<td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#downloadAddModal">Download & Update Result</button></td>';
+                        // tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ data[row]['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
                         tableRow += '<td>Add Answer</td>';
                         tableRow += '<td style="visibility:hidden" >'+data[row]['onlineExamUserStatus']+'</td>';
                         tableRow += '<tr>';
                     }
                     
                 }
-                // for (var index = 0; index < pdfStudentList.length; index++) {
-                //     if(pdfStudentList['totalObtainedMark'] == "0" || pdfStudentList['answerFile'] != NULL || pdfStudentList['answerFile'] != ""){
+                // for (var row in data) {
+                //     if(data[row]['totalObtainedMark'] == "0" || data[row]['answerFile'] != NULL || data[row]['answerFile'] != ""){
                 //         tableRow += '<tr>';
                 //         tableRow += '<td>'+(index++)+'</td>';
-                //         tableRow += '<td>'+pdfStudentList['roll']+'</td>';
-                //         tableRow += '<td>'+pdfStudentList['name']+'</td>';
-                //         tableRow += '<td>'+pdfStudentList['totalMark']+'</td>';
-                //         tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ pdfStudentList['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
+                //         tableRow += '<td>'+data[row]['roll']+'</td>';
+                //         tableRow += '<td>'+data[row]['name']+'</td>';
+                //         tableRow += '<td>'+data[row]['totalMark']+'</td>';
+                //         tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ data[row]['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
                 //         tableRow += '<td>Add Answer</td>';
-                //         tableRow += '<td style="visibility:hidden" >'+pdfStudentList['onlineExamUserStatus']+'</td>';
+                //         tableRow += '<td style="visibility:hidden" >'+data[row]['onlineExamUserStatus']+'</td>';
                 //         tableRow += '<tr>';
                 //     }
                     
                 // }
-
-                // pdfStudentList.forEach(element => {
-                    
-                // });
-
-                // pdfStudentList.forEach(element => {
-                    
-                // });
-
-                // // if(count($pdfStudentList)>0){
-                //    foreach(pdfStudentList as $row){
-                //         if($row->totalObtainedMark == "0" || $row->answerFile != NULL || $row->answerFile != ""){
-                //             $tableRow .='<tr>';
-                //             $tableRow .='<td>'.$index++.'</td>';
-                //             $tableRow .= '<td>'.$row->roll.'</td>';
-                //             $tableRow .= '<td>'.$row->name.'</td>';
-                //             $tableRow .= '<td>'.$row->totalMark.'</td>';
-                //             $tableRow .= '<td> <a href="onlineexamreport/download_answer_file/' .$row->onlineExamUserStatus .'" class="btn btn-sm btn-info">Download File</a></td>';
-                //             $tableRow .= '<td>Add Answer</td>';
-                //             $tableRow .='<td style="visibility:hidden" >'.$row->onlineExamUserStatus.'</td>';
-                //             $tableRow .='</tr>';
-                //         }
-                        
-                //     }
-                // }
-
-
-
-
-
+                
 
                 $('#pdfStudentList').html(tableRow);
                 
             }
         });
     });
+
+    $('#downloadAddModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
     
 </script>
