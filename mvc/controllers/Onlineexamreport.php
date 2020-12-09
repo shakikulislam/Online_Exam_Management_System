@@ -171,7 +171,8 @@ class Onlineexamreport extends Admin_Controller {
 			'totalObtainedMark'	=> $singleAttendStudent->totalObtainedMark,
 			'totalPercentage'	=> $singleAttendStudent->totalPercentage,
 			'answerFile'		=> '<embed src="./uploads/question_files/answer_files/' . $singleAttendStudent->answerFile . '" width="100%" height="100%">',
-			'downloadAnswer'	=>'<a href="onlineexamreport/download_answer_file/' . $singleAttendStudent->onlineExamUserStatus . '" >Download File</a>'
+			'downloadAnswer'	=>'<a href="onlineexamreport/download_answer_file/' . $singleAttendStudent->onlineExamUserStatus . '">Download File</a>'
+			
 			
 			// 'answerFile'		=> $singleAttendStudent->answerFile
 		);
@@ -181,6 +182,33 @@ class Onlineexamreport extends Admin_Controller {
 		echo json_encode($attendStudent, NULL);
 	}
 	
+	public function update_result(){
+		$onlineExamUserStatus =$this->input->post('onlineExamUserStatus');
+        $totalQuestion =$this->input->post('totalQuestion');
+        $totalAnswer =$this->input->post('totalAnswer');
+        $totalCorrectAnswer =$this->input->post('totalCorrectAnswer');
+        $totalMark =$this->input->post('totalMark');
+        $totalObtainedMark =$this->input->post('totalObtainedMark');
+		$details =$this->input->post('details');
+
+		$totalPercentage=(($totalObtainedMark > 0 && $totalMark > 0) ? (($totalObtainedMark/$totalMark)*100) : 0);
+
+			
+		$updateData=array(
+			'totalQuestion'		=> $totalQuestion,
+			'totalAnswer'		=> $totalAnswer,
+			'totalCurrectAnswer'=> $totalCorrectAnswer,
+			'totalObtainedMark'	=> $totalObtainedMark,
+			'totalPercentage'	=> $totalPercentage,
+			'details'			=> $details
+		);
+		// redirect(base_url('onlineexamreport'));
+		// echo('<pre>');
+		// print_r($updateData);
+		// die();
+		$returnArray= $this->OnlineExamAttend_m->update_result($updateData, $onlineExamUserStatus);
+		echo json_encode($returnArray);
+	}
 // --------------------------------------------
 
 

@@ -57,5 +57,9 @@ class OnlineExamAttend_m extends MY_Model {
 		return $result->row();
     }
 	
+	public function update_result($data, $onlineExamUserStatus){
+		$this->db->where('onlineExamUserStatus', $onlineExamUserStatus);
+		$this->db->update('online_exam_user_status', $data);
+	}
 
 }

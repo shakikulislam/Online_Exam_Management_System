@@ -183,38 +183,39 @@
             </div>
             <div class="modal-body">
                 <form action="" method="POST">
+                    
+                    <input type="hidden" name="onlineExamUserStatus" id="onlineExamUserStatus">
+                    
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="preview" id="answerFileDiv">
-                                
-                            </div>
+                            <div class="preview" id="answerFileDiv"> </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label class="control-label">Total Question</label>
-                                <input type="text" class="form-control" id="totalQuestion">
+                                <label class="control-label">Total Question <span class="text-red">*</span> </label>
+                                <input type="number" class="form-control" id="totalQuestion" required>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Total Answer</label>
-                                <input type="text" class="form-control" id="totalAnswer">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label class="control-label">Total Correct Answer</label>
-                                <input type="text" class="form-control" id="totalCorrectAnswer">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Total Mark</label>
-                                <input type="text" class="form-control" id="totalMark" readonly>
+                                <label class="control-label">Total Answer <span class="text-red">*</span></label>
+                                <input type="number" class="form-control" id="totalAnswer" required>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label class="control-label">Total Obtained Mark</label>
-                                <input type="text" class="form-control" id="totalObtainedMark">
+                                <label class="control-label">Total Correct Answer <span class="text-red">*</span></label>
+                                <input type="number" class="form-control" id="totalCorrectAnswer" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Total Mark <span class="text-red">*</span></label>
+                                <input type="number" class="form-control" id="totalMark" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Total Obtained Mark <span class="text-red">*</span></label>
+                                <input type="number" class="form-control" id="totalObtainedMark" required>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Details</label>
@@ -222,14 +223,15 @@
                             </div>
 
                         </div>
+                        <button type="submit" class="btn btn-primary" id="updateResult">Update Result</button>
                     </div>
+                    
                     
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button class="btn btn-sm btn-info" id="downloadAnswerFile"></button>
-                <button type="submit" class="btn btn-primary" id="updateResult">Update Result</button>
+                <div class="btn btn-sm btn-danger" id="downloadAnswerFile"></div>
             </div>
         </div>
     </div>
@@ -348,21 +350,6 @@
                     }
                     
                 }
-                // for (var row in data) {
-                //     if(data[row]['totalObtainedMark'] == "0" || data[row]['answerFile'] != NULL || data[row]['answerFile'] != ""){
-                //         tableRow += '<tr>';
-                //         tableRow += '<td>'+(index++)+'</td>';
-                //         tableRow += '<td>'+data[row]['roll']+'</td>';
-                //         tableRow += '<td>'+data[row]['name']+'</td>';
-                //         tableRow += '<td>'+data[row]['totalMark']+'</td>';
-                //         tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ data[row]['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
-                //         tableRow += '<td>Add Answer</td>';
-                //         tableRow += '<td style="visibility:hidden" >'+data[row]['onlineExamUserStatus']+'</td>';
-                //         tableRow += '<tr>';
-                //     }
-                    
-                // }
-                
 
                 $('#pdfStudentList').html(tableRow);
                 
@@ -371,13 +358,8 @@
     });
 
     $(document).on('click','.updateButton', function(){
-        
 
         var onlineExamUserStatus=$(this).attr('id');
-
-        // echo ('<pre>');
-		// print_r(onlineExamUserStatus);
-		// die();
 
         $.ajax({
             url:"<?php echo base_url('onlineexamreport/get_single_examAttend') ?>",
@@ -388,42 +370,57 @@
 
                 $('#downloadAddModal').modal('show');
 
-                // var totalQuestion =data['totalQuestion'];
-                // var totalAnswer =data['totalAnswer'];
-                // var totalCurrectAnswer =data['totalCurrectAnswer'];
                 var totalMark =data['totalMark'];
-                // var totalObtainedMark =data['totalObtainedMark'];
-                // var totalPercentage =data['totalPercentage'];
                 var answerFile =data['answerFile'];
                 var downloadAnswer =data['downloadAnswer'];
-                // var details =data['details'];
 
-                
-
-                // var passStudent=data.length;
-                // $('#totalQuestion').val(totalQuestion);
-                // $('#totalAnswer').val(totalAnswer);
-                // $('#totalCorrectAnswer').val(totalCurrectAnswer);
-                $('#totalMark').val(totalMark);
-                // $('#totalObtainedMark').val(totalObtainedMark);
-                // $('#totalPercentage').val(totalPercentage);
+                $('#onlineExamUserStatus').val(onlineExamUserStatus);
+                $('#totalMark').val(totalMark);;
                 $('#answerFileDiv').html(answerFile);
                 $('#downloadAnswerFile').html(downloadAnswer);
-                // $('#details').html(details);
-                // $('#passStudent').html(passStudent);
 
             }
 
         });
     });
-    // $('#downloadAddModal').on('show.bs.modal', function (event) {
-    //     var button = $(event.relatedTarget) // Button that triggered the modal
-    //     var recipient = button.data('whatever') // Extract info from data-* attributes
-    //     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    //     var modal = $(this)
-    //     modal.find('.modal-title').text(recipient)
-    //     modal.find('.modal-body input').val(recipient)
-    // })
+
+    $(document).on('click','#updateResult', function(){
+
+        var onlineExamUserStatus =$('#onlineExamUserStatus').val();
+        var totalQuestion =$('#totalQuestion').val();
+        var totalAnswer =$('#totalAnswer').val();
+        var totalCorrectAnswer =$('#totalCorrectAnswer').val();
+        var totalMark =$('#totalMark').val();
+        var totalObtainedMark =$('#totalObtainedMark').val();
+        var details =$('#details').val();
+
+        $.ajax({
+            url:"<?php echo base_url('onlineexamreport/update_result') ?>",
+            type:"POST",
+            data:{'onlineExamUserStatus':onlineExamUserStatus, 'totalQuestion': totalQuestion, 'totalAnswer': totalAnswer
+                    , 'totalCorrectAnswer':totalCorrectAnswer , 'totalMark':totalMark , 'totalObtainedMark':totalObtainedMark 
+                    , 'details':details},
+            dataType:'json',
+            success:function(data){
+
+                alart(data);
+                // $('#downloadAddModal').modal('close');
+                
+                // var totalMark =data['totalMark'];
+                // var answerFile =data['answerFile'];
+                // var downloadAnswer =data['downloadAnswer'];
+
+                // $('#onlineExamUserStatus').val(onlineExamUserStatus);
+                // $('#totalMark').val(totalMark);;
+                // $('#answerFileDiv').html(answerFile);
+                // $('#downloadAnswerFile').html(downloadAnswer);
+
+            }
+
+        });
+        
+        // alert(onlineExamUserStatus);
+        
+    });
     
 </script>
