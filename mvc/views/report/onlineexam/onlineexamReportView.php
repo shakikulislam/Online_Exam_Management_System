@@ -174,31 +174,65 @@
 
 <!-- Modal -->
 
-<div class="modal fade" id="downloadAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="control-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="control-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
+<div class="modal fade " id="downloadAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Update Result</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="preview" id="answerFileDiv">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Total Question</label>
+                                <input type="text" class="form-control" id="totalQuestion">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Total Answer</label>
+                                <input type="text" class="form-control" id="totalAnswer">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Total Correct Answer</label>
+                                <input type="text" class="form-control" id="totalCorrectAnswer">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Total Mark</label>
+                                <input type="text" class="form-control" id="totalMark" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Total Obtained Mark</label>
+                                <input type="text" class="form-control" id="totalObtainedMark">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Details</label>
+                                <textarea class="form-control" id="details"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-sm btn-info" id="downloadAnswerFile"></button>
+                <button type="submit" class="btn btn-primary" id="updateResult">Update Result</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- <div class="box" id="load_onlineexamreport"></div> -->
@@ -304,7 +338,9 @@
                         tableRow += '<td>'+data[row]['roll']+'</td>';
                         tableRow += '<td>'+data[row]['name']+'</td>';
                         tableRow += '<td>'+data[row]['totalMark']+'</td>';
-                        tableRow += '<td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#downloadAddModal">Download & Update Result</button></td>';
+                        // tableRow += '<td> <a href="'+ <?php echo base_url('') ?> +'">Download & Update Result</a> </td>';
+                        tableRow += '<td> <button type="button" class="btn btn-primary updateButton" id="'+ data[row]['onlineExamUserStatus'] +'" >Download & Update Result</button> </td>';
+                        // tableRow += '<td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#downloadAddModal">Download & Update Result</button></td>';
                         // tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ data[row]['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
                         tableRow += '<td>Add Answer</td>';
                         tableRow += '<td style="visibility:hidden" >'+data[row]['onlineExamUserStatus']+'</td>';
@@ -334,14 +370,60 @@
         });
     });
 
-    $('#downloadAddModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text(recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+    $(document).on('click','.updateButton', function(){
+        
+
+        var onlineExamUserStatus=$(this).attr('id');
+
+        // echo ('<pre>');
+		// print_r(onlineExamUserStatus);
+		// die();
+
+        $.ajax({
+            url:"<?php echo base_url('onlineexamreport/get_single_examAttend') ?>",
+            type:"POST",
+            data:{'onlineExamUserStatus':onlineExamUserStatus},
+            dataType:'json',
+            success:function(data){
+
+                $('#downloadAddModal').modal('show');
+
+                // var totalQuestion =data['totalQuestion'];
+                // var totalAnswer =data['totalAnswer'];
+                // var totalCurrectAnswer =data['totalCurrectAnswer'];
+                var totalMark =data['totalMark'];
+                // var totalObtainedMark =data['totalObtainedMark'];
+                // var totalPercentage =data['totalPercentage'];
+                var answerFile =data['answerFile'];
+                var downloadAnswer =data['downloadAnswer'];
+                // var details =data['details'];
+
+                
+
+                // var passStudent=data.length;
+                // $('#totalQuestion').val(totalQuestion);
+                // $('#totalAnswer').val(totalAnswer);
+                // $('#totalCorrectAnswer').val(totalCurrectAnswer);
+                $('#totalMark').val(totalMark);
+                // $('#totalObtainedMark').val(totalObtainedMark);
+                // $('#totalPercentage').val(totalPercentage);
+                $('#answerFileDiv').html(answerFile);
+                $('#downloadAnswerFile').html(downloadAnswer);
+                // $('#details').html(details);
+                // $('#passStudent').html(passStudent);
+
+            }
+
+        });
+    });
+    // $('#downloadAddModal').on('show.bs.modal', function (event) {
+    //     var button = $(event.relatedTarget) // Button that triggered the modal
+    //     var recipient = button.data('whatever') // Extract info from data-* attributes
+    //     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    //     var modal = $(this)
+    //     modal.find('.modal-title').text(recipient)
+    //     modal.find('.modal-body input').val(recipient)
+    // })
     
 </script>

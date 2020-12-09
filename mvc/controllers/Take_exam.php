@@ -456,6 +456,7 @@ Class Take_exam extends Admin_Controller {
                         //---------------------Start-----------------------
 
                         'answerFile' => $newFileName,
+                        'details' => NULL,
                         
                         //-------------------End--------------------------
 

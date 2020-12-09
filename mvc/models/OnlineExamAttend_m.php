@@ -34,8 +34,6 @@ class OnlineExamAttend_m extends MY_Model {
 		return $query->num_rows();
 	}
 
-	
-
 	function get_student_list($classesID, $onlineExamID){
 		$this->db->select('*');
 		$this->db->from('student');
@@ -45,6 +43,12 @@ class OnlineExamAttend_m extends MY_Model {
 		$this->db->where('online_exam_user_status.onlineExamID', $onlineExamID);
 		$query=$this->db->get();
 		return $query->result();
+	}
+
+	function get_single_examAttend($onlineExamUserStatus){
+		$this->db->where('onlineExamUserStatus', $onlineExamUserStatus);
+		$result = $this->db->get('online_exam_user_status');
+		return $result->row();
 	}
 
 	public function download_answer_file($onlineExamUserStatus){

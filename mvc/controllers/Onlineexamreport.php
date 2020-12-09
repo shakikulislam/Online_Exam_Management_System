@@ -143,35 +143,7 @@ class Onlineexamreport extends Admin_Controller {
 		$classesID=$this->input->post('classesID');
 		$onlineExamID=$this->input->post('onlineExamID');
 		$studentList=$this->OnlineExamAttend_m->get_student_list($classesID, $onlineExamID);
-		$onlineExam=$this->OnlineExamAttend_m->get_exam_by_classes($classesID, $onlineExamID);
 
-
-		// if(count($studentList)>0){
-		// 	echo json_encode($studentList);
-		// }
-		// $index=1;
-		// $tableRow = '';
-
-		// if(count($studentList)>0){
-		// 	foreach($studentList as $row){
-		// 		if($row->totalObtainedMark == "0" || $row->answerFile != NULL || $row->answerFile != ""){
-		// 			$tableRow .='<tr>';
-		// 			$tableRow .='<td>'.$index++.'</td>';
-		// 			$tableRow .= '<td>'.$row->roll.'</td>';
-		// 			$tableRow .= '<td>'.$row->name.'</td>';
-		// 			$tableRow .= '<td>'.$row->totalMark.'</td>';
-		// 			$tableRow .= '<td> <a href="onlineexamreport/download_answer_file/' .$row->onlineExamUserStatus .'" class="btn btn-sm btn-info">Download File</a></td>';
-		// 			$tableRow .= '<td>Add Answer</td>';
-		// 			$tableRow .='<td style="visibility:hidden" >'.$row->onlineExamUserStatus.'</td>';
-		// 			$tableRow .='</tr>';
-		// 		}
-				
-		// 	}
-		// }
-
-		// $tableList=array(
-		// 	'tableRow' => $tableRow
-		// );
 		echo json_encode($studentList);
 	}
 
@@ -185,8 +157,30 @@ class Onlineexamreport extends Admin_Controller {
 			// die();
             force_download($file, NULL);
         }
-    }
+	}
+	
+	public function get_single_examAttend(){
+		$onlineExamUserStatus=$this->input->post('onlineExamUserStatus');
+		$singleAttendStudent=$this->OnlineExamAttend_m->get_single_examAttend($onlineExamUserStatus);
 
+		$attendStudent=array(
+			'totalQuestion'		=> $singleAttendStudent->totalQuestion,
+			'totalAnswer'		=> $singleAttendStudent->totalAnswer,
+			'totalCurrectAnswer'=> $singleAttendStudent->totalCurrectAnswer,
+			'totalMark'			=> $singleAttendStudent->totalMark,
+			'totalObtainedMark'	=> $singleAttendStudent->totalObtainedMark,
+			'totalPercentage'	=> $singleAttendStudent->totalPercentage,
+			'answerFile'		=> '<embed src="./uploads/question_files/answer_files/' . $singleAttendStudent->answerFile . '" width="100%" height="100%">',
+			'downloadAnswer'	=>'<a href="onlineexamreport/download_answer_file/' . $singleAttendStudent->onlineExamUserStatus . '" >Download File</a>'
+			
+			// 'answerFile'		=> $singleAttendStudent->answerFile
+		);
+		// echo ('<pre>');
+		// 	print_r($attendStudent);
+		// 	die();
+		echo json_encode($attendStudent, NULL);
+	}
+	
 // --------------------------------------------
 
 
