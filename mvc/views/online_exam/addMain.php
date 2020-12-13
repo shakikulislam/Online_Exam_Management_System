@@ -378,14 +378,16 @@
                         </span>
                     </div>
 
-                    <div class="form-group <?=form_error('ispaid') ? 'has-error' : '' ?>" id="ispaidDiv" hidden>
+                    <div class="form-group <?=form_error('ispaid') ? 'has-error' : '' ?>" id="ispaidDiv" >
                         <label for="ispaid" class="col-sm-2 control-label">
                             <?=$this->lang->line("online_exam_payment_status")?> <span class="text-red">*</span>
                         </label>
                         <div class="col-sm-6">
                             <?php
                                 $array = [
-                                    0 => $this->lang->line("online_exam_free")
+                                    5 => $this->lang->line("online_exam_select"),
+                                    0 => $this->lang->line("online_exam_free"),
+                                    1 => $this->lang->line("online_exam_paid")
                                 ];
                                 echo form_dropdown("ispaid", $array, set_value("ispaid"), "id='ispaid' class='form-control select2'");
                             ?>

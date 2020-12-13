@@ -25,8 +25,10 @@
                         <thead>
                             <tr>
                                 <th class="col-sm-2"><?=$this->lang->line('slno')?></th>
-                                <th class="col-sm-7"><?=$this->lang->line('online_exam_name')?></th>
-                                <th class="col-sm-1"><?=$this->lang->line('online_exam_published')?></th>
+                                <th class="col-sm-2"><?=$this->lang->line('online_exam_name')?></th>
+                                <th class="col-sm-2"><?=$this->lang->line('online_exam_published')?></th>
+                                <th class="col-sm-2"><?=$this->lang->line('online_exam_payment_status')?></th>
+                                <th class="col-sm-2"><?=$this->lang->line('online_exam_cost')?></th>
                                 <?php if(permissionChecker('online_exam_edit') || permissionChecker('online_exam_delete') || permissionChecker('online_exam_view')) { ?>
                                     <th class="col-sm-2"><?=$this->lang->line('action')?></th>
                                 <?php } ?>
@@ -68,6 +70,12 @@
                                                 echo "<span class='btn btn-danger btn-xs'>".$this->lang->line('online_exam_no')."</span>";
                                             } 
                                         ?>
+                                    </td>
+                                    <td data-title="<?=$this->lang->line('online_exam_payment_status')?>">
+                                        <?=($online_exam->paid == 1) ? $this->lang->line('online_exam_paid') : $this->lang->line('online_exam_free') ;?>
+                                    </td> 
+                                    <td data-title="<?=$this->lang->line('online_exam_cost')?>">
+                                        <?=($online_exam->paid == 1) ? number_format($online_exam->cost, '2') : number_format($online_exam->cost, '2');?> <?=$siteinfos->currency_code?>
                                     </td>
                                     <?php if(permissionChecker('online_exam_edit') || permissionChecker('online_exam_delete') || permissionChecker('online_exam_view')) { ?>
                                         <td data-title="<?=$this->lang->line('action')?>">
