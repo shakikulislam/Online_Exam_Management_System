@@ -4,19 +4,6 @@
 
     class Alert extends Admin_Controller
     {
-        /*
-        | -----------------------------------------------------
-        | PRODUCT NAME:     INILABS SCHOOL MANAGEMENT SYSTEM
-        | -----------------------------------------------------
-        | AUTHOR:           INILABS TEAM
-        | -----------------------------------------------------
-        | EMAIL:            info@inilabs.net
-        | -----------------------------------------------------
-        | COPYRIGHT:        RESERVED BY INILABS IT
-        | -----------------------------------------------------
-        | WEBSITE:          http://inilabs.net
-        | -----------------------------------------------------
-        */
 
         private $_alert = [];
         private $_userAlert = [];

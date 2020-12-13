@@ -1,19 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Cli extends CI_Controller {
-    /*
-    | -----------------------------------------------------
-    | PRODUCT NAME: 	INILABS SCHOOL MANAGEMENT SYSTEM
-    | -----------------------------------------------------
-    | AUTHOR:			INILABS TEAM
-    | -----------------------------------------------------
-    | EMAIL:			info@inilabs.net
-    | -----------------------------------------------------
-    | COPYRIGHT:		RESERVED BY INILABS IT
-    | -----------------------------------------------------
-    | WEBSITE:			http://inilabs.net
-    | -----------------------------------------------------
-    */
+
     // For user php artisan cli crud controllerName tableName PrimaryID (optional - subfolder name in views )
     protected $DUMMY_CLASS_NAME;
     protected $DUMMY_MODEL_NAME;

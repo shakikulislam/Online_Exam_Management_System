@@ -1,19 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
     class Install extends CI_Controller {
-        /*
-        | -----------------------------------------------------
-        | PRODUCT NAME: 	INILABS SCHOOL MANAGEMENT SYSTEM
-        | -----------------------------------------------------
-        | AUTHOR:			INILABS TEAM
-        | -----------------------------------------------------
-        | EMAIL:			info@inilabs.net
-        | -----------------------------------------------------
-        | COPYRIGHT:		RESERVED BY INILABS IT
-        | -----------------------------------------------------
-        | WEBSITE:			http://inilabs.net
-        | -----------------------------------------------------
-        */
 
         protected $_info;
         protected $_internet_connection = FALSE;
