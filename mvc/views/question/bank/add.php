@@ -205,9 +205,13 @@
 
                     <div class="form-group" id="pdfDiv">
                         <label for="" class="col-sm-2 control-label">PDF <span class='text-red'>*</span> </label>
+                        
                         <div class="col-sm-6">
-                            <input type="file" accept="image/.pdf" name="pdfFile" id="pdfFile" class="form-control">
+                            <input type="file" accept="image/png, image/jpg, image/jpeg, image/gif, .pdf" name="pdfFile" id="pdfFile" class="form-control">
                         </div>
+                        <span class="col-sm-4 control-label">
+                            
+                        </span>
                     </div>
 
                     <div id="in"></div>
@@ -218,8 +222,6 @@
                         </div>
                     </div>
                     
-                    
-
                 </form>
             </div>
         </div>

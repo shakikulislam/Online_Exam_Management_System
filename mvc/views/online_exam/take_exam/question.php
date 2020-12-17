@@ -118,7 +118,9 @@
                                                     <?php } ?>
                                                     
                                                     <!-- <input type="file" name="ansFile" id="ansFile" class="custom-file-input"> -->
-                                                    <input type="file" accept=".pdf" name="ansFile" id="ansFile" class="form-control">
+                                                    <br><br>
+                                                    <h3 >Select Answer File (Onle PDF)</h3>
+                                                    <input type="file" accept=".pdf" name="ansFile" id="ansFile" class="form-control btn btn-success">
                                                     
                                                 </div>
                                             </div>
