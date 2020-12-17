@@ -223,7 +223,6 @@
                             </div>
 
                         </div>
-                        <button type="submit" class="btn btn-primary" id="updateResult">Update Result</button>
                     </div>
                     
                     
@@ -232,6 +231,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <div class="btn btn-sm btn-danger" id="downloadAnswerFile"></div>
+                <button type="submit" class="btn btn-primary" id="updateResult" data-dismiss="modal">Update Result</button>
             </div>
         </div>
     </div>
@@ -341,7 +341,7 @@
                         tableRow += '<td>'+data[row]['name']+'</td>';
                         tableRow += '<td>'+data[row]['totalMark']+'</td>';
                         // tableRow += '<td> <a href="'+ <?php echo base_url('') ?> +'">Download & Update Result</a> </td>';
-                        tableRow += '<td> <button type="button" class="btn btn-primary updateButton" id="'+ data[row]['onlineExamUserStatus'] +'" >Download & Update Result</button> </td>';
+                        tableRow += '<td> <button type="button" class="btn btn-xs btn-primary updateButton" id="'+ data[row]['onlineExamUserStatus'] +'" >Download & Update Result</button> </td>';
                         // tableRow += '<td> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#downloadAddModal">Download & Update Result</button></td>';
                         // tableRow += '<td> <a href="onlineexamreport/download_answer_file/'+ data[row]['onlineExamUserStatus'] +'" class="btn btn-sm btn-info">Download File</a></td>';
                         tableRow += '<td>Add Answer</td>';
